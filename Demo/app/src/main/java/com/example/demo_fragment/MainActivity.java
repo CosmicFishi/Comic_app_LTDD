@@ -6,23 +6,34 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn;
+    Button btn,btn2;
     FragmentManager fm = getSupportFragmentManager();
-
+    Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn = (Button)findViewById(R.id.button2);
+        String string = getString(R.string.Lorem);
+        bundle.putString("placeholder", string);
+
+        btn = (Button)findViewById(R.id.button1);
+        btn2 = (Button)findViewById(R.id.button2);
 
         btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragment();
+            }
+        });
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragment();
@@ -36,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = fm.findFragmentById(R.id.fl_fragment);
         if(fragment instanceof FirstFragment){
             fragment = new SecondFragment();
+            fragment.setArguments(bundle);
         } else {
             fragment = new FirstFragment();
         }
@@ -47,4 +59,6 @@ public class MainActivity extends AppCompatActivity {
 //        ft.addToBackStack("abc");
         ft.commit();
     }
+
+
 }
