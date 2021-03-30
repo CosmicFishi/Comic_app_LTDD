@@ -54,11 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction ft = fm.beginTransaction();
 
-        ft.add(R.id.fl_fragment, fragment);
+//        ft.add(R.id.fl_fragment, fragment);
         ft.replace(R.id.fl_fragment, fragment);
 //        ft.addToBackStack("abc");
         ft.commit();
     }
-
-
 }
