@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--    Dùng src để đặt root cho hình ảnh, không dùng background-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp" >
+            <ImageView
+                android:id="@+id/img_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/chich_thu_gia_thien"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingHorizontal="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên truyện"
+                android:gravity="center"
+                android:textSize="32sp"
+                android:paddingBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:baselineAligned="true"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/author"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="24sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/ark_num"
+                        android:textSize="24sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/status"
+                        android:textSize="24sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/view"
+                        android:textSize="24sp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:baselineAligned="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="left">
+
+                    <TextView
+                        android:id="@+id/txt_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="huasjsadj"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="24sp"/>
+                    <TextView
+                        android:id="@+id/txt_chapters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="jasdkjaskjdj"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="24sp"/>
+                    <TextView
+                        android:id="@+id/txt_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="finished"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="24sp"/>
+                    <TextView
+                        android:id="@+id/txt_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="5561615315"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="24sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="15"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat ut neque et aliquet. Duis finibus orci elementum arcu fringilla hendrerit. Aliquam sed tempus leo. Suspendisse dapibus dui mauris, porttitor efficitur velit suscipit ac. Curabitur maximus viverra risus, convallis vestibulum lorem fermentum vel. Etiam massa mi, consequat quis tincidunt at, fermentum sit amet nibh. Suspendisse congue ultricies turpis ac mollis. Fusce congue risus et porttitor pulvinar."
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="30dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:padding="22dp"
+                app:backgroundTint="#A4D3DF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="30dp"
+                android:text="Add to favorite"
+                android:textColor="@color/white"/>
+            <Button
+                android:layout_marginVertical="10dp"
+                android:padding="20dp"
+                app:backgroundTint="@null"
+                android:background="@drawable/main_button_shape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add to favorite"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -12,6 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.comic_app"
+        vectorDrawables.useSupportLibrary = true
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1

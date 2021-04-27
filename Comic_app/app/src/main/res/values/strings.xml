@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Comic_app</string>
+    <string name="author">Tác giả</string>
+    <string name="ark_num">Số chương</string>
+    <string name="status">Trạng thái</string>
+    <string name="view">Lượt xem</string>
 </resources>
