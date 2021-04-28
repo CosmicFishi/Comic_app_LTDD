@@ -4,4 +4,6 @@
     <string name="ark_num">Số chương</string>
     <string name="status">Trạng thái</string>
     <string name="view">Lượt xem</string>
+    <string name="nextC">Chương sau</string>
+    <string name="preC">Chương trước</string>
 </resources>
