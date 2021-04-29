@@ -26,6 +26,7 @@ public class FirebaseApi {
                             Category cate = document.toObject(Category.class);
                             list.add(cate);
                         }
+
                     }else {
                         Log.w("ERROR======", "ERROR", task.getException());
                     }
