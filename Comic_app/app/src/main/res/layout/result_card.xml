@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:padding="10dp" >
+        <ImageView
+            android:id="@+id/img_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/chich_thu_gia_thien"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên truyện"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:textSize="28sp"
+            android:paddingBottom="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:baselineAligned="true"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/author"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/ark_num"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/status"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/view"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:baselineAligned="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="left">
+
+                <TextView
+                    android:id="@+id/txt_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="huasjsadj"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/txt_chapters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="jasdkjaskjdj"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/txt_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="finished"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/txt_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="55616153"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

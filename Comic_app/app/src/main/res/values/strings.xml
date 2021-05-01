@@ -6,4 +6,8 @@
     <string name="view">Lượt xem</string>
     <string name="nextC">Chương sau</string>
     <string name="preC">Chương trước</string>
+    <string name="uName">Tên người dùng: </string>
+    <string name="uPhone">Số điện thoại: </string>
+    <string name="uNumFav">Số truyện yêu thích: </string>
+    <string name="uEmail">Email: </string>
 </resources>
