@@ -2,31 +2,33 @@ package com.example.comic_app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.comic_app.model.Category;
+import com.example.comic_app.Fragments.Favorite_Fragment;
+import com.example.comic_app.Fragments.Home_Fragment;
+import com.example.comic_app.Fragments.Profile_Fragment;
+import com.example.comic_app.Fragments.Search_Fragment;
+import com.example.comic_app.Fragments.Setting_Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +44,46 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new
+            BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+                    switch (item.getItemId()) {
+                        case R.id.nav_home:
+                            selectedFragment = new Home_Fragment();
+                            break;
+                    case R.id.nav_fav:
+                        selectedFragment = new Favorite_Fragment();
+                        break;
+                    case R.id.nav_profile:
+                        selectedFragment = new Profile_Fragment();
+                        break;
+                    case R.id.nav_search:
+                        selectedFragment = new Search_Fragment();
+                        break;
+                    case R.id.nav_settings:
+                        selectedFragment = new Setting_Fragment();
+                        break;
+                    }
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frag_container,selectedFragment)
+                            .commit();
+
+                    return true;
+                }
+            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.comic_main);
+//
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
+//
+//        //Navigation between fragments
+//        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
