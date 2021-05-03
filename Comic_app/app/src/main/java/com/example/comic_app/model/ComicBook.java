@@ -1,4 +1,4 @@
-package com.example.comic_app;
+package com.example.comic_app.model;
 
 import java.util.ArrayList;
 import java.util.List;

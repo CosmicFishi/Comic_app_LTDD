@@ -1,4 +1,6 @@
-package com.example.comic_app;
+package com.example.comic_app.model;
+
+import com.example.comic_app.model.Category;
 
 import java.util.ArrayList;
 import java.util.List;

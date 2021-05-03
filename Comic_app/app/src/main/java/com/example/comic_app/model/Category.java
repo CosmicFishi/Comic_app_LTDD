@@ -1,4 +1,4 @@
-package com.example.comic_app;
+package com.example.comic_app.model;
 
 public class Category {
     private String categoryName;
