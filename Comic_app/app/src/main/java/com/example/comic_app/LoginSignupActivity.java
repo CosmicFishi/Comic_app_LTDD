@@ -60,10 +60,9 @@ public class LoginSignupActivity extends Activity {
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
 
-            if(email.isEmpty() && password.isEmpty() &&
-                    checkValidRegex(email, emailRegex) && checkValidRegex(password, passRegex)) {
-                Toast.makeText(getApplicationContext(), "Please enter the correct informations", Toast.LENGTH_SHORT).show();
-            } else {
+            if(email.isEmpty() && password.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Please enter the correct information", Toast.LENGTH_SHORT).show();
+            } else if (checkValidEmailAndPassword(email,password)) {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -83,9 +82,9 @@ public class LoginSignupActivity extends Activity {
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
 
-            if(email.isEmpty() && password.isEmpty() && checkValidRegex(email, emailRegex) && checkValidRegex(password, passRegex)) {
-                Toast.makeText(getApplicationContext(), "Please enter the correct informations", Toast.LENGTH_SHORT).show();
-            } else {
+            if(email.isEmpty() && password.isEmpty() ) {
+                Toast.makeText(getApplicationContext(), "Please enter the correct information", Toast.LENGTH_SHORT).show();
+            } else if (checkValidEmailAndPassword(email, password)) {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -155,6 +154,13 @@ public class LoginSignupActivity extends Activity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private boolean checkValidEmailAndPassword(String email, String password) {
+        if(checkValidRegex(email, emailRegex) && checkValidRegex(password, passRegex))
+            return true;
+        Toast.makeText(getApplicationContext(), "Input incorrect email or password format. Password must be strong", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     private boolean checkValidRegex(String string, String pattern) {
