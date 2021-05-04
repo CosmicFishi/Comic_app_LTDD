@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,11 +26,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.regex.Pattern;
+
 public class LoginSignupActivity extends Activity {
     private static final int RC_SIGN_IN = 9001;
+    private FirebaseAuth mAuth;
+
+    private final String emailRegex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+    private final String passRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
+
     EditText editTextUsername, editTextPassword;
     Button btnLogin, btnLoginGoogle, btnSignUp;
-    private FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -53,34 +60,45 @@ public class LoginSignupActivity extends Activity {
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                changeMainActivity();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Failed: create account, plz try again.", Toast.LENGTH_SHORT).show();
+            if(email.isEmpty() && password.isEmpty() &&
+                    checkValidRegex(email, emailRegex) && checkValidRegex(password, passRegex)) {
+                Toast.makeText(getApplicationContext(), "Please enter the correct informations", Toast.LENGTH_SHORT).show();
+            } else {
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    changeMainActivity();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Failed: create account, please try again.", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
+            }
+
         });
 
         btnLogin.setOnClickListener(v -> {
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                changeMainActivity();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+            if(email.isEmpty() && password.isEmpty() && checkValidRegex(email, emailRegex) && checkValidRegex(password, passRegex)) {
+                Toast.makeText(getApplicationContext(), "Please enter the correct informations", Toast.LENGTH_SHORT).show();
+            } else {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    changeMainActivity();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
+            }
+
         });
 
         btnLoginGoogle.setOnClickListener(v -> {
@@ -137,5 +155,9 @@ public class LoginSignupActivity extends Activity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private boolean checkValidRegex(String string, String pattern) {
+        return Pattern.matches(pattern, string);
     }
 }
