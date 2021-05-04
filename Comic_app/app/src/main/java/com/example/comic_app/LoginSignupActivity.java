@@ -157,13 +157,9 @@ public class LoginSignupActivity extends Activity {
     }
 
     private boolean checkValidEmailAndPassword(String email, String password) {
-        if(checkValidRegex(email, emailRegex) && checkValidRegex(password, passRegex))
+        if(Utils.checkValidRegex(email, emailRegex) && Utils.checkValidRegex(password, passRegex))
             return true;
         Toast.makeText(getApplicationContext(), "Input incorrect email or password format. Password must be strong", Toast.LENGTH_SHORT).show();
         return false;
-    }
-
-    private boolean checkValidRegex(String string, String pattern) {
-        return Pattern.matches(pattern, string);
     }
 }

@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.comic_app.R;
 
-public class Favorite_Fragment extends Fragment {
+public class Home_Fragment_Activity extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.comic_favorite_page,container,false);
+        return inflater.inflate(R.layout.comic_home_page,container,false);
     }
 }

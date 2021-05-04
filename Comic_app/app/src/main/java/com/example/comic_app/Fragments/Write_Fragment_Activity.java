@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.example.comic_app.R;
 
-public class Home_Fragment extends Fragment {
+public class Write_Fragment_Activity extends Fragment {
 
     @Nullable
     @Override
