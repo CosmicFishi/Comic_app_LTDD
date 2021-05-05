@@ -30,13 +30,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="30dp"
+            android:paddingHorizontal="30dp"
+            android:paddingBottom="20dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+                android:minHeight="30dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -45,8 +46,8 @@
                     android:text="@string/uName"
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:textSize="24sp"/>
+                    android:layout_weight="2"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/txt_u_name"
@@ -55,13 +56,13 @@
                     android:layout_height="wrap_content"
                     android:text="Sample Name"
                     android:layout_marginBottom="10dp"
-                    android:textSize="24sp"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+                android:minHeight="30dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -70,8 +71,8 @@
                     android:text="@string/uEmail"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:textSize="24sp"/>
+                    android:layout_weight="2"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/txt_u_email"
@@ -80,13 +81,13 @@
                     android:layout_height="wrap_content"
                     android:text="sample@gmail.com"
                     android:layout_marginBottom="10dp"
-                    android:textSize="24sp"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+                android:minHeight="30dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -95,8 +96,8 @@
                     android:text="@string/uNumFav"
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:textSize="24sp"/>
+                    android:layout_weight="2"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/txt_u_num_fav"
@@ -105,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sample Name"
                     android:layout_marginBottom="10dp"
-                    android:textSize="24sp"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
@@ -127,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Fav List"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:drawableTint="@color/white"
@@ -148,28 +149,26 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Settings"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:layout_gravity="center_horizontal"
                             android:gravity="center_horizontal"
                             android:drawableTint="@color/white"
-                            android:drawableLeft="@drawable/ic_baseline_settings"
-                            android:paddingVertical="20dp"
+                            android:paddingVertical="15dp"
                             app:backgroundTint="@null"
                             android:background="@drawable/main_button_shape"/>
                         <Button
                             android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
+                            android:layout_weight="1.2"
                             android:layout_marginTop="20dp"
                             android:id="@+id/btn_log_out"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Log out"
-                            android:textSize="20sp"
+                            android:text="logout"
+                            android:textSize="16sp"
                             android:layout_gravity="center_horizontal"
                             android:gravity="center_horizontal"
                             android:drawableTint="@color/white"
-                            android:drawableLeft="@drawable/ic_baseline_settings"
-                            android:paddingVertical="20dp"
+                            android:paddingVertical="15dp"
                             app:backgroundTint="@null"
                             android:background="@drawable/main_button_shape"/>
 
