@@ -22,6 +22,7 @@ import com.example.comic_app.LoginSignupActivity;
 import com.example.comic_app.MainActivity;
 import com.example.comic_app.R;
 import com.example.comic_app.Utils;
+import com.example.comic_app.data.DownloadImageTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +49,7 @@ public class Profile_Fragment_Activity extends Fragment {
 
         View home_view = inflater.inflate(R.layout.comic_user_profile_page,container,false);
         bindUI(home_view);
-        img_thumbnail.setImageURI(currentUser.getPhotoUrl());
+
 
         btn_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +86,14 @@ public class Profile_Fragment_Activity extends Fragment {
             }
         });
 
+        img_thumbnail.setImageURI(currentUser.getPhotoUrl());
+        new DownloadImageTask(img_thumbnail).execute(currentUser.getPhotoUrl().toString());
         txt_email.setText(currentUser.getEmail());
         txt_name.setText(currentUser.getDisplayName());
         if (currentUser.getPhoneNumber() != "")
             txt_u_phone.setText(currentUser.getPhoneNumber());
+
+
 
         return home_view;
     }

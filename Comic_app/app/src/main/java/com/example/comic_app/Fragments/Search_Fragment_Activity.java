@@ -4,18 +4,83 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.comic_app.R;
+import com.example.comic_app.adapter.AdapterComicBook;
+import com.example.comic_app.model.ComicBook;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Search_Fragment_Activity extends Fragment {
+    FirebaseFirestore fireStore;
+    ListView listView;
+    ListAdapter listAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.comic_search_page,container,false);
+        View view =inflater.inflate(R.layout.comic_search_page,container,false);
+
+        listView = view.findViewById(R.id.listView);
+        fireStore = FirebaseFirestore.getInstance();
+
+        Query query = fireStore.collection("comic_book")
+                .orderBy("title", Query.Direction.DESCENDING).limit(10);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<ComicBook> listComicBooks = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        ComicBook comicBook = new ComicBook();
+
+                        comicBook.setChapterList((List<String>)document.get("chapterList"));
+                        comicBook.setAuthor((String)document.get("author"));
+                        comicBook.setCategory((List<Integer>)document.get("category"));
+                        comicBook.setImage((String)document.get("image"));
+                        comicBook.setLength((String)document.get("length"));
+                        comicBook.setStatus((String)document.get("status"));
+                        comicBook.setSummary((String)document.get("summany"));
+                        comicBook.setTitle((String)document.get("title"));
+
+                        listComicBooks.add(comicBook);
+                    }
+                    listAdapter = new AdapterComicBook(getActivity(), R.layout.result_card, listComicBooks);
+
+                    listView.setAdapter(listAdapter);
+                } else {
+
+                }
+            }
+        });
+
+
+        return view;
     }
+    private AdapterView.OnItemClickListener messageClickedHandler = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView parent, View v, int position, long id) {
+            // Do something in response to the click
+        }
+    };
 }
