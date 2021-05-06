@@ -59,6 +59,22 @@
                 app:layout_constraintTop_toTopOf="@id/topView"
                 app:layout_constraintVertical_bias="0.268" />
 
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="47dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="305dp"
+                android:layout_marginTop="78dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/topView"
+                app:layout_constraintEnd_toEndOf="@+id/topView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/topView"
+                app:layout_constraintTop_toTopOf="@+id/topView"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_baseline_notifications_24" />
+
             <View
                 android:id="@+id/Vien"
                 android:layout_width="match_parent"
@@ -88,6 +104,7 @@
                 app:layout_constraintVertical_bias="0.0"
                 app:riv_border_color="#53D2DB"
                 app:riv_corner_radius="30dip" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -119,7 +136,7 @@
                     android:background="@drawable/home_button_cate1"
                     android:drawableTint="@color/white"
                     android:gravity="center"
-                    android:text="Action"
+                    android:text="@string/buttoncat3"
                     android:textSize="15dp"
                     app:backgroundTint="@null" />
 
@@ -131,7 +148,7 @@
                     android:background="@drawable/home_button_cate2"
                     android:drawableTint="@color/white"
                     android:gravity="center"
-                    android:text="Action"
+                    android:text="@string/buttoncat2"
                     android:textSize="16dp"
                     app:backgroundTint="@null" />
 
@@ -143,7 +160,7 @@
                     android:background="@drawable/home_button_cate3"
                     android:drawableTint="@color/white"
                     android:gravity="center"
-                    android:text="Action"
+                    android:text="@string/buttoncat1"
                     android:textSize="16dp"
                     app:backgroundTint="@null" />
              </LinearLayout>
@@ -159,6 +176,10 @@
             android:textColor="#000000"
             android:textSize="25sp" />
 
+        <ListView
+            android:id="@+id/comic_list"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
     </LinearLayout>
 
 </ScrollView>

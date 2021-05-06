@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     TextView header;
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
                     return true;
                 }
+
+
             };
 
     @Override
@@ -130,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 //        header.setText("UserId: "+ personId);
+
+
     }
 
 //    public void bidingUI(){
@@ -145,4 +151,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginSignupActivity.class);
         startActivity(intent);
     }
+
 }

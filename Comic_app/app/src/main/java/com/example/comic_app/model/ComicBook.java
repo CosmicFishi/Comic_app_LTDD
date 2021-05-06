@@ -11,7 +11,11 @@ public class ComicBook {
     private String status;
     private String summary;
     private String title;
-
+    public ComicBook(String tieude,String anh,String author){
+        this.title = tieude;
+        this.author = author;
+        this.image = anh;
+    }
     public List getChapterList() {
         return chapterList;
     }
