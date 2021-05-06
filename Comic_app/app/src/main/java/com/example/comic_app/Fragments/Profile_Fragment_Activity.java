@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,27 +22,33 @@ import com.example.comic_app.LoginSignupActivity;
 import com.example.comic_app.MainActivity;
 import com.example.comic_app.R;
 import com.example.comic_app.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
 public class Profile_Fragment_Activity extends Fragment {
-
     private FirebaseUser currentUser;
-    private FirebaseAuth mAuth;
+    FirebaseFirestore fireStore;
 
-    TextView txt_email, txt_name, txt_num_fav;
+    TextView txt_email, txt_name, txt_num_fav, txt_u_phone;
     Button btn_settings_page, btn_log_out;
+    ImageView img_thumbnail;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        fireStore = FirebaseFirestore.getInstance();
 
         View home_view = inflater.inflate(R.layout.comic_user_profile_page,container,false);
         bindUI(home_view);
+        img_thumbnail.setImageURI(currentUser.getPhotoUrl());
 
         btn_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +85,10 @@ public class Profile_Fragment_Activity extends Fragment {
             }
         });
 
-        txt_email.setText(mAuth.getCurrentUser().getEmail());
-        txt_name.setText(mAuth.getCurrentUser().getEmail());
+        txt_email.setText(currentUser.getEmail());
+        txt_name.setText(currentUser.getDisplayName());
+        txt_u_phone.setText(currentUser.getPhoneNumber());
+
         return home_view;
     }
 
@@ -89,6 +98,8 @@ public class Profile_Fragment_Activity extends Fragment {
         txt_email = (TextView)view.findViewById(R.id.txt_u_email);
         txt_name = (TextView)view.findViewById(R.id.txt_u_name);
         txt_num_fav = (TextView)view.findViewById(R.id.txt_u_num_fav);
+        txt_u_phone = (TextView)view.findViewById(R.id.txt_u_phone);
+        img_thumbnail = (ImageView)view.findViewById(R.id.img_thumbnail);
     }
 
 }

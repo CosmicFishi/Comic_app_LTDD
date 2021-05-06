@@ -25,11 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class MainActivity extends AppCompatActivity {
-    TextView header;
-    Button btnAPI, btnSignOut;
-    EditText editText;
-    ImageView imageView;
-
     FirebaseFirestore fireStore;
 
     private FirebaseUser currentUser;
@@ -77,9 +72,6 @@ public class MainActivity extends AppCompatActivity {
             changeLoginActivity();
             return;
         }
-
-        String personId = currentUser.getUid();
-        Uri personAvatar = currentUser.getPhotoUrl();
 
 //        setContentView(R.layout.activity_main);
 
