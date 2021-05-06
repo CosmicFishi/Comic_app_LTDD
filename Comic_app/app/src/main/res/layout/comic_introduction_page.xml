@@ -15,11 +15,13 @@
             android:orientation="vertical"
             android:padding="30dp" >
             <ImageView
-                android:id="@+id/img_thumbnail"
+                android:fitsSystemWindows="true"
+                android:scaleType="fitCenter"
+                android:id="@+id/img_c_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/chich_thu_gia_thien"
+                app:srcCompat="@drawable/ic_baseline_placeholder"
                 />
         </LinearLayout>
 
@@ -30,7 +32,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_name"
+                android:id="@+id/txt_c_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tên truyện"
@@ -41,75 +43,95 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:baselineAligned="true"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/author"
                         android:layout_marginBottom="5dp"
                         android:textSize="24sp"/>
                     <TextView
+                        android:id="@+id/txt_c_author"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text=""
                         android:layout_marginBottom="5dp"
-                        android:text="@string/ark_num"
-                        android:textSize="24sp"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/status"
-                        android:textSize="24sp"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/view"
                         android:textSize="24sp"/>
 
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:baselineAligned="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="left">
+                    android:minHeight="30dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txt_author"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="huasjsadj"
+                        android:text="@string/ark_num"
                         android:layout_marginBottom="5dp"
                         android:textSize="24sp"/>
                     <TextView
-                        android:id="@+id/txt_chapters"
+                        android:id="@+id/txt_c_chapters"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="jasdkjaskjdj"
+                        android:text=""
+                        android:layout_marginBottom="5dp"
+                        android:textSize="24sp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status"
                         android:layout_marginBottom="5dp"
                         android:textSize="24sp"/>
                     <TextView
-                        android:id="@+id/txt_status"
+                        android:id="@+id/txt_c_status"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="finished"
+                        android:text=""
+                        android:layout_marginBottom="5dp"
+                        android:textSize="24sp"/>
+
+                </LinearLayout><LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/view"
                         android:layout_marginBottom="5dp"
                         android:textSize="24sp"/>
                     <TextView
-                        android:id="@+id/txt_view"
+                        android:id="@+id/txt_c_views"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="5561615315"
+                        android:text=""
                         android:layout_marginBottom="5dp"
                         android:textSize="24sp"/>
 
@@ -123,11 +145,12 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/txt_c_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="15"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat ut neque et aliquet. Duis finibus orci elementum arcu fringilla hendrerit. Aliquam sed tempus leo. Suspendisse dapibus dui mauris, porttitor efficitur velit suscipit ac. Curabitur maximus viverra risus, convallis vestibulum lorem fermentum vel. Etiam massa mi, consequat quis tincidunt at, fermentum sit amet nibh. Suspendisse congue ultricies turpis ac mollis. Fusce congue risus et porttitor pulvinar."
+                    android:text="Vui lòng đợi một chút"
                     android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>
@@ -143,6 +166,7 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btn_add_fav"
                 android:padding="22dp"
                 app:backgroundTint="#A4D3DF"
                 android:layout_width="match_parent"
@@ -151,13 +175,14 @@
                 android:text="Add to favorite"
                 android:textColor="@color/white"/>
             <Button
+                android:id="@+id/btn_view_chapter"
                 android:layout_marginVertical="10dp"
                 android:padding="20dp"
                 app:backgroundTint="@null"
                 android:background="@drawable/main_button_shape"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add to favorite"
+                android:text="Start reading"
                 android:textColor="@color/white"/>
 
         </LinearLayout>

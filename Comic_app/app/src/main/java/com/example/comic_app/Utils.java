@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.regex.Pattern;
 
 public class Utils {
-    public Bitmap getImage(String url) {
+    public static Bitmap getImage(String url) {
         try {
             return BitmapFactory.decodeStream(new URL(url).openConnection().getInputStream());
         } catch (IOException e) {
