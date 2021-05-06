@@ -87,7 +87,8 @@ public class Profile_Fragment_Activity extends Fragment {
 
         txt_email.setText(currentUser.getEmail());
         txt_name.setText(currentUser.getDisplayName());
-        txt_u_phone.setText(currentUser.getPhoneNumber());
+        if (currentUser.getPhoneNumber() != "")
+            txt_u_phone.setText(currentUser.getPhoneNumber());
 
         return home_view;
     }
