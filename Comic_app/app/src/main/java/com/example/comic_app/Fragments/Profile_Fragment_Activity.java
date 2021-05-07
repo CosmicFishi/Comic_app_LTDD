@@ -86,8 +86,11 @@ public class Profile_Fragment_Activity extends Fragment {
             }
         });
 
-//        img_thumbnail.setImageURI(currentUser.getPhotoUrl());
-//        new DownloadImageTask(img_thumbnail).execute(currentUser.getPhotoUrl().toString());
+        //need checking
+        if(currentUser.getPhotoUrl() != null ) {
+            img_thumbnail.setImageURI(currentUser.getPhotoUrl());
+            new DownloadImageTask(img_thumbnail).execute(currentUser.getPhotoUrl().toString());
+        }
         txt_email.setText(currentUser.getEmail());
         txt_name.setText(currentUser.getDisplayName());
         if (currentUser.getPhoneNumber() != "")
