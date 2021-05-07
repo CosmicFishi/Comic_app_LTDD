@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/prev1"
+        android:id="@+id/btn_prev"
         android:layout_width="0dp"
         app:backgroundTint="@null"
         android:background="@drawable/main_button_shape"
@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:text="@string/preC"/>
     <Button
-        android:id="@+id/next1"
+        android:id="@+id/btn_next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:backgroundTint="@null"
