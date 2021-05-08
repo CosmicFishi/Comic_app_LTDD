@@ -72,8 +72,7 @@ public class Search_Fragment_Activity extends Fragment {
         kw = kw.toUpperCase();
         if(kw.length() != 0) {
             Query query = fireStore.collection("comic_book")
-                    .orderBy("title").startAt(kw).endAt(kw);
-//                    .orderBy("title").startAt(kw);
+                    .orderBy("title").startAt(kw).limit(10);
             setResultData(query);
         } else {
             Query query = fireStore.collection("comic_book")
