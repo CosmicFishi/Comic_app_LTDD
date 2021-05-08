@@ -32,38 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new
-            BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            selectedFragment = new Home_Fragment_Activity();
-                            break;
-                    case R.id.nav_fav:
-                        selectedFragment = new Favorite_Fragment_Activity();
-                        break;
-                    case R.id.nav_profile:
-                        selectedFragment = new Profile_Fragment_Activity();
-                        break;
-                    case R.id.nav_search:
-                        selectedFragment = new Search_Fragment_Activity();
-                        break;
-                    case R.id.nav_write:
-                        selectedFragment = new Write_Fragment_Activity();
-                        break;
-                    }
-
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frag_container,selectedFragment)
-                            .commit();
-
-                    return true;
-                }
-
-
-            };
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 //        setContentView(R.layout.activity_main);
-
+        createNarbar();
         setContentView(R.layout.comic_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
 
@@ -138,7 +107,40 @@ public class MainActivity extends AppCompatActivity {
 //        imageView = findViewById(R.id.imageView);
 //    }
 
+    public void createNarbar(){
+        navigationItemSelectedListener = new
+                BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.nav_home:
+                                selectedFragment = new Home_Fragment_Activity();
+                                break;
+                            case R.id.nav_fav:
+                                selectedFragment = new Favorite_Fragment_Activity();
+                                break;
+                            case R.id.nav_profile:
+                                selectedFragment = new Profile_Fragment_Activity();
+                                break;
+                            case R.id.nav_search:
+                                selectedFragment = new Search_Fragment_Activity();
+                                break;
+                            case R.id.nav_write:
+                                selectedFragment = new Write_Fragment_Activity();
+                                break;
+                        }
 
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frag_container,selectedFragment)
+                                .commit();
+
+                        return true;
+                    }
+
+
+                };
+    }
     public void changeLoginActivity() {
         Intent intent = new Intent(this, LoginSignupActivity.class);
         startActivity(intent);

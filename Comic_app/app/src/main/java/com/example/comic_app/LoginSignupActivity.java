@@ -1,41 +1,58 @@
 package com.example.comic_app;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.comic_app.data.DBSqlLite;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+enum EnumPage {
+    LOGIN, REGISTER;
+
+    public EnumPage switchPage() {
+        if (this == EnumPage.LOGIN)
+            return EnumPage.REGISTER;
+        else
+            return EnumPage.LOGIN;
+    }
+}
 
 public class LoginSignupActivity extends Activity {
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore fireStore;
+    private EnumPage currentPage = EnumPage.LOGIN;
 
     private final String emailRegex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private final String passRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
 
-    EditText editTextUsername, editTextPassword;
+    TextView textViewTitle;
+    EditText editTextUsername, editTextPassword, editTextDisplayName, editTextPhone, editTextConfirmPassword;
     Button btnLogin, btnLoginGoogle, btnSignUp;
     GoogleSignInClient mGoogleSignInClient;
 
@@ -45,7 +62,9 @@ public class LoginSignupActivity extends Activity {
         setContentView(R.layout.login_signup);
 
         bidingUI();
+        switchPage(EnumPage.LOGIN);
         mAuth = FirebaseAuth.getInstance();
+        fireStore = FirebaseFirestore.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -57,17 +76,23 @@ public class LoginSignupActivity extends Activity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         btnSignUp.setOnClickListener(v -> {
+            if (currentPage != EnumPage.REGISTER){
+                switchPage(EnumPage.REGISTER);
+                return;
+            }
+
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
 
             if(email.isEmpty() && password.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please enter the correct information", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Please enter the form.", Toast.LENGTH_SHORT).show();
             } else if (checkValidEmailAndPassword(email,password)) {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    adduserDetail();
                                     changeMainActivity();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Failed: create account, please try again.", Toast.LENGTH_SHORT).show();
@@ -79,6 +104,11 @@ public class LoginSignupActivity extends Activity {
         });
 
         btnLogin.setOnClickListener(v -> {
+            if (currentPage != EnumPage.LOGIN){
+                switchPage(EnumPage.LOGIN);
+                return;
+            }
+
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
 
@@ -121,9 +151,13 @@ public class LoginSignupActivity extends Activity {
     private void bidingUI(){
         editTextUsername = findViewById(R.id.editTextUserName);
         editTextPassword = findViewById(R.id.editTextTextPassword);
+        editTextDisplayName = findViewById(R.id.editTextDisplayName);
+        editTextPhone = findViewById(R.id.editTextPhone);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
+        textViewTitle = findViewById(R.id.textViewTitle);
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -135,6 +169,7 @@ public class LoginSignupActivity extends Activity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                adduserDetail();
                                 changeMainActivity();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Can't get the access Token.", Toast.LENGTH_SHORT).show();
@@ -143,6 +178,7 @@ public class LoginSignupActivity extends Activity {
                     });
         } catch (ApiException e) {
             Log.w("ERROR==============", "signInResult:failed code=" + e.getStatusCode());
+            e.printStackTrace();
         }
     }
 
@@ -162,4 +198,38 @@ public class LoginSignupActivity extends Activity {
         Toast.makeText(getApplicationContext(), "Input incorrect email or password format. Password must be strong", Toast.LENGTH_SHORT).show();
         return false;
     }
+
+    public void adduserDetail(){
+        Map<String, Object> user = new HashMap<>();
+        user.put("comicHistory", new ArrayList<String>());
+        user.put("favouriteComic", new ArrayList<String>());
+        user.put("phone", "");
+
+        fireStore.collection("user").document(mAuth.getUid())
+                .set(user, SetOptions.merge())
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "ERROR create profile", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void switchPage(EnumPage page){
+        if (page == EnumPage.LOGIN){
+            textViewTitle.setText("LOGIN");
+            editTextDisplayName.setVisibility(View.GONE);
+            editTextPhone.setVisibility(View.GONE);
+            editTextConfirmPassword.setVisibility(View.GONE);
+            currentPage = EnumPage.LOGIN;
+        }
+        else {
+            textViewTitle.setText("RESIGTER");
+            editTextDisplayName.setVisibility(View.VISIBLE);
+            editTextPhone.setVisibility(View.VISIBLE);
+            editTextConfirmPassword.setVisibility(View.VISIBLE);
+            currentPage = EnumPage.REGISTER;
+        }
+    }
+
 }
