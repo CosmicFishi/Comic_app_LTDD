@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/sv_main_container"
     android:orientation="vertical"
     android:padding="30dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,15 +14,6 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,8 +23,6 @@
 
             </LinearLayout>
 
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,22 +30,22 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_c_chapter_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="bkjasdkjasdkjasdkjsajd"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txt_c_chapter_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="1.15sp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lectus nibh, luctus ut euismod non, porttitor vel lacus. Quisque varius neque vitae odio ultricies, in eleifend sem mattis. Etiam volutpat, dolor id hendrerit condimentum, nibh dui pharetra eros, maximus interdum odio nulla sagittis justo. Praesent justo ante, dapibus commodo dapibus vitae, commodo id augue. Etiam ac eros non nibh aliquam pellentesque sit amet id ipsum. Vivamus eget lacinia velit, quis egestas orci. Donec id rhoncus erat, nec tempor lectus. Aliquam nec auctor quam, vel vehicula libero. Nulla fringilla turpis sit amet facilisis cursus. Nam elit elit, commodo et fringilla non, euismod vitae lectus. Pellentesque nec libero volutpat, imperdiet tellus sed, maximus sem. Vivamus malesuada placerat purus eu mollis. Morbi fringilla, urna porta rhoncus pulvinar, orci sem euismod turpis, et vehicula arcu urna sit amet purus.
-
-\n Suspendisse sed dolor vel mauris rutrum pharetra sit amet id arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla justo nunc, efficitur nec orci sed, placerat consequat sapien. Nunc non lacinia mi, sit amet dignissim erat. Mauris vitae ornare metus. Ut aliquam ex et eros rutrum condimentum sit amet vitae metus. Maecenas eget tincidunt magna. Etiam ac imperdiet mi, a pellentesque est. Vivamus finibus mi mattis augue ultrices, sit amet lobortis quam placerat. Integer nisi odio, tempus in neque a, laoreet sagittis mauris."
+                android:text=""
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -69,7 +59,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <include layout="@layout/btn_next_prev"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btn_prev2"
+                        android:layout_width="0dp"
+                        app:backgroundTint="@null"
+                        android:background="@drawable/main_button_shape"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/preC"/>
+                    <Button
+                        android:id="@+id/btn_next2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@null"
+                        android:background="@drawable/main_button_shape"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/nextC"/>
+
+                </LinearLayout>
 
 
             </LinearLayout>

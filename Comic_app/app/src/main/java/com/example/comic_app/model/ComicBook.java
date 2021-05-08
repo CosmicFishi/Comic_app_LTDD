@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ComicBook {
-    private List<String> chapterList = new ArrayList<>();
+    private String id;
     private String author;
-    private int category;
+    private List<Integer> category = new ArrayList<>();
     private String image;
     private String status;
     private String summary;
+    private String length;
     private String title;
+    private List<String> chapterList = new ArrayList<>();
+
+    public ComicBook() {}
     public ComicBook(String tieude,String anh,String author){
         this.title = tieude;
         this.author = author;
@@ -30,14 +34,6 @@ public class ComicBook {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public int getCategory() {
-        return category;
-    }
-
-    public void setCategory(int category) {
-        this.category = category;
     }
 
     public String getImage() {
@@ -70,5 +66,29 @@ public class ComicBook {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public List<Integer> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<Integer> category) {
+        this.category = category;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

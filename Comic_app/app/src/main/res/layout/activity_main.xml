@@ -28,7 +28,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                tools:srcCompat="@drawable/chich_thu_gia_thien" />
+                 />
 
     </LinearLayout>
 

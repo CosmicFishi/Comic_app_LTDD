@@ -1,13 +1,13 @@
 package com.example.comic_app.model;
 
 public class ComicChapter {
-    private String chapter;
+    private String content;
 
-    public String getChaper() {
-        return chapter;
+    public String getContent() {
+        return content;
     }
 
-    public void setChaper(String chaper) {
-        this.chapter = chaper;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

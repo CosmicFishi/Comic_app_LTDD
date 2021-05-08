@@ -27,48 +27,12 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    TextView header;
-    Button btnAPI, btnSignOut;
-    EditText editText;
-    ImageView imageView;
-
     FirebaseFirestore fireStore;
 
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new
-            BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            selectedFragment = new Home_Fragment_Activity();
-                            break;
-                    case R.id.nav_fav:
-                        selectedFragment = new Favorite_Fragment_Activity();
-                        break;
-                    case R.id.nav_profile:
-                        selectedFragment = new Profile_Fragment_Activity();
-                        break;
-                    case R.id.nav_search:
-                        selectedFragment = new Search_Fragment_Activity();
-                        break;
-                    case R.id.nav_write:
-                        selectedFragment = new Write_Fragment_Activity();
-                        break;
-                    }
-
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frag_container,selectedFragment)
-                            .commit();
-
-                    return true;
-                }
-
-
-            };
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        String personId = currentUser.getUid();
-        Uri personAvatar = currentUser.getPhotoUrl();
 
 //        setContentView(R.layout.activity_main);
+        createNarbar();
 
         setContentView(R.layout.comic_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
@@ -99,43 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.frag_container,Home_Fragment)
                 .commit();
 
-//        bidingUI();
-
-//        Error mainthreat and async
-//        imageView.setImageBitmap(new Utils().getImage(personAvatar.toString()));
-
-//        fireStore = FirebaseFirestore.getInstance();
-//
-//        btnAPI.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fireStore.collection("category").get()
-//                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                List<Category> list = new ArrayList<>();
-//                                if (task.isSuccessful()){
-//                                    for (QueryDocumentSnapshot document : task.getResult()){
-//                                        Category cate = document.toObject(Category.class);
-//                                        list.add(cate);
-//                                    }
-//                                    editText.setText(list.toString());
-//                                }else {
-//                                    Log.w("ERROR======", "ERROR", task.getException());
-//                                }
-//                            }
-//                        });
-//            }
-//        });
-//
-//        btnSignOut.setOnClickListener(v -> {
-//            FirebaseAuth.getInstance().signOut();
-//            changeLoginActivity();
-//        });
-
-//        header.setText("UserId: "+ personId);
-
-
     }
 
 //    public void bidingUI(){
@@ -146,10 +72,43 @@ public class MainActivity extends AppCompatActivity {
 //        imageView = findViewById(R.id.imageView);
 //    }
 
+    public void createNarbar(){
+        navigationItemSelectedListener = new
+                BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.nav_home:
+                                selectedFragment = new Home_Fragment_Activity();
+                                break;
+                            case R.id.nav_fav:
+                                selectedFragment = new Favorite_Fragment_Activity();
+                                break;
+                            case R.id.nav_profile:
+                                selectedFragment = new Profile_Fragment_Activity();
+                                break;
+                            case R.id.nav_search:
+                                selectedFragment = new Search_Fragment_Activity();
+                                break;
+                            case R.id.nav_write:
+                                selectedFragment = new Write_Fragment_Activity();
+                                break;
+                        }
+
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frag_container,selectedFragment)
+                                .commit();
+
+                        return true;
+                    }
+
+
+                };
+    }
 
     public void changeLoginActivity() {
         Intent intent = new Intent(this, LoginSignupActivity.class);
         startActivity(intent);
     }
-
 }
