@@ -23,7 +23,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -55,6 +57,7 @@ public class LoginSignupActivity extends Activity {
     EditText editTextUsername, editTextPassword, editTextDisplayName, editTextPhone, editTextConfirmPassword;
     Button btnLogin, btnLoginGoogle, btnSignUp;
     GoogleSignInClient mGoogleSignInClient;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class LoginSignupActivity extends Activity {
         switchPage(EnumPage.LOGIN);
         mAuth = FirebaseAuth.getInstance();
         fireStore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -86,13 +90,19 @@ public class LoginSignupActivity extends Activity {
 
             if(email.isEmpty() && password.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter the form.", Toast.LENGTH_SHORT).show();
+            } else if (editTextPassword.getText().toString() != editTextConfirmPassword.getText().toString()){
+                Toast.makeText(getApplicationContext(), "Password confirm not correct", Toast.LENGTH_SHORT).show();
             } else if (checkValidEmailAndPassword(email,password)) {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    adduserDetail();
+                                    adduserDetail(editTextPhone.getText().toString());
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(editTextDisplayName.getText().toString())
+                                            .build();
+                                    auth.getCurrentUser().updateProfile(profileUpdates);
                                     changeMainActivity();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Failed: create account, please try again.", Toast.LENGTH_SHORT).show();
@@ -127,7 +137,6 @@ public class LoginSignupActivity extends Activity {
                             }
                         });
             }
-
         });
 
         btnLoginGoogle.setOnClickListener(v -> {
@@ -169,7 +178,11 @@ public class LoginSignupActivity extends Activity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                adduserDetail();
+                                if (auth.getCurrentUser().getPhoneNumber() != "")
+                                    adduserDetail(auth.getCurrentUser().getPhoneNumber());
+                                else
+                                    adduserDetail("Not set");
+
                                 changeMainActivity();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Can't get the access Token.", Toast.LENGTH_SHORT).show();
@@ -199,11 +212,11 @@ public class LoginSignupActivity extends Activity {
         return false;
     }
 
-    public void adduserDetail(){
+    public void adduserDetail(String phone){
         Map<String, Object> user = new HashMap<>();
         user.put("comicHistory", new ArrayList<String>());
         user.put("favouriteComic", new ArrayList<String>());
-        user.put("phone", "Not set");
+        user.put("phone", phone);
 
         fireStore.collection("user").document(mAuth.getUid())
                 .set(user, SetOptions.merge())
@@ -222,6 +235,7 @@ public class LoginSignupActivity extends Activity {
             editTextPhone.setVisibility(View.GONE);
             editTextConfirmPassword.setVisibility(View.GONE);
             currentPage = EnumPage.LOGIN;
+            editTextUsername.requestFocus();
         }
         else {
             textViewTitle.setText("RESIGTER");
@@ -229,6 +243,7 @@ public class LoginSignupActivity extends Activity {
             editTextPhone.setVisibility(View.VISIBLE);
             editTextConfirmPassword.setVisibility(View.VISIBLE);
             currentPage = EnumPage.REGISTER;
+            editTextDisplayName.requestFocus();
         }
     }
 
