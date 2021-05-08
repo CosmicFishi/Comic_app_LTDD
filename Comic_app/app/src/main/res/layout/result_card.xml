@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="horizontal"
+    android:layout_marginBottom="10dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -17,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/chich_thu_gia_thien"
+            app:srcCompat="@drawable/ic_baseline_book"
             />
     </LinearLayout>
 
@@ -35,86 +37,102 @@
             android:text="Tên truyện"
             android:textStyle="bold"
             android:gravity="left"
-            android:textSize="28sp"
+            android:textSize="20sp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:paddingBottom="10dp"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:minHeight="30dp"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
                 android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:baselineAligned="true"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/author"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/ark_num"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/status"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/view"
-                    android:textSize="20sp"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_weight="1"
-                android:baselineAligned="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="left">
+                android:text="@string/author"
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txt_author"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
 
-                <TextView
-                    android:id="@+id/txt_author"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="huasjsadj"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:id="@+id/txt_chapters"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="jasdkjaskjdj"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:id="@+id/txt_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="finished"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:id="@+id/txt_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="20sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:orientation="horizontal">
 
-            </LinearLayout>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ark_num"
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txt_chapters"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/status"
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/view"
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txt_view"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"/>
 
         </LinearLayout>
 

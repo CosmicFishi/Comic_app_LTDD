@@ -1,6 +1,7 @@
 package com.example.comic_app.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +12,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.comic_app.R;
 import com.example.comic_app.model.ComicBook;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 public class AdapterComicBook extends ArrayAdapter<ComicBook> {
     private int resourceLayout;
     private Context mContext;
+    private FirebaseStorage storage;
 
     public AdapterComicBook(@NonNull Context context, int resource, @NonNull List<ComicBook> objects) {
         super(context, resource, objects);
         this.resourceLayout = resource;
         this.mContext = context;
+        this.storage = FirebaseStorage.getInstance();
     }
 
     @NonNull
@@ -38,6 +45,8 @@ public class AdapterComicBook extends ArrayAdapter<ComicBook> {
             vi = LayoutInflater.from(mContext);
             v = vi.inflate(resourceLayout, null);
         }
+        //lấy ref tới storage
+        StorageReference sr = storage.getReference();
 
         ComicBook comicBook = getItem(position);
 
@@ -49,7 +58,15 @@ public class AdapterComicBook extends ArrayAdapter<ComicBook> {
             TextView txt_view = (TextView) v.findViewById(R.id.txt_view);
             TextView txt_book_name = (TextView) v.findViewById(R.id.txt_book_name);
 
-            if (img_comic != null) {}
+            if (img_comic != null) {
+                sr.child("images/" + comicBook.getImage()).getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(getContext()).load(uri).into(img_comic);
+                            }
+                        });
+            }
             if (txt_view != null) {}
 
             if (txt_author != null) {

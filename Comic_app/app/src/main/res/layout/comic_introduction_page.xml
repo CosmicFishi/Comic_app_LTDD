@@ -151,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="6"
+                    android:maxLines="10"
                     android:text="Vui lòng đợi một chút"
                     android:textSize="24sp" />
             </LinearLayout>

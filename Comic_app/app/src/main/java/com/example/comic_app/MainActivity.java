@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fireStore;
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
                     return true;
                 }
+
+
             };
 
     @Override
@@ -122,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 //        header.setText("UserId: "+ personId);
+
+
     }
 
 //    public void bidingUI(){

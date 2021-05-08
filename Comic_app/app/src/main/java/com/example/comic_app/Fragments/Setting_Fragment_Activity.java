@@ -14,7 +14,7 @@ import com.example.comic_app.R;
 
 public class Setting_Fragment_Activity extends Fragment {
 
-    Button btn_return_profile, btn_comic_page;
+    Button btn_return_profile;
 
     @Nullable
     @Override
@@ -31,25 +31,10 @@ public class Setting_Fragment_Activity extends Fragment {
             }
         });
 
-        btn_comic_page.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-
-                //dòng này cần thay đổi dựa vào id comic
-                bundle.putString("comic_id", "ban-tang");
-
-                Fragment comic_page = new Comic_Introduction_Fragment_Activity();
-                comic_page.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, comic_page).commit();
-            }
-        });
-
         return setting_view;
     }
 
     private void bindUI(View view) {
         btn_return_profile = (Button)view.findViewById(R.id.btn_return_profile_page);
-        btn_comic_page = (Button)view.findViewById(R.id.btn_temp_comic_page);
     }
 }

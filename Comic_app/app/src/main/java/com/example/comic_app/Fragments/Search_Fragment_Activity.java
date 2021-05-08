@@ -1,6 +1,7 @@
 package com.example.comic_app.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class Search_Fragment_Activity extends Fragment {
     FirebaseFirestore fireStore;
     ListView listView;
     ListAdapter listAdapter;
+    List<ComicBook> listComics;
 
     @Nullable
     @Override
@@ -49,38 +51,53 @@ public class Search_Fragment_Activity extends Fragment {
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<ComicBook> listComicBooks = new ArrayList<>();
-
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        ComicBook comicBook = new ComicBook();
-
-                        comicBook.setChapterList((List<String>)document.get("chapterList"));
-                        comicBook.setAuthor((String)document.get("author"));
-                        comicBook.setCategory((List<Integer>)document.get("category"));
-                        comicBook.setImage((String)document.get("image"));
-                        comicBook.setLength((String)document.get("length"));
-                        comicBook.setStatus((String)document.get("status"));
-                        comicBook.setSummary((String)document.get("summany"));
-                        comicBook.setTitle((String)document.get("title"));
-
-                        listComicBooks.add(comicBook);
-                    }
-                    listAdapter = new AdapterComicBook(getActivity(), R.layout.result_card, listComicBooks);
-
-                    listView.setAdapter(listAdapter);
+                if(getActivity() == null) {
+                    return;
                 } else {
+                    if (task.isSuccessful()) {
+                        List<ComicBook> listComicBooks = new ArrayList<>();
 
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            ComicBook comicBook = new ComicBook();
+
+                            comicBook.setId(document.getId());
+                            comicBook.setChapterList((List<String>)document.get("chapterList"));
+                            comicBook.setAuthor((String)document.get("author"));
+                            comicBook.setCategory((List<Integer>)document.get("category"));
+                            comicBook.setImage((String)document.get("image"));
+                            comicBook.setLength((String)document.get("length"));
+                            comicBook.setStatus((String)document.get("status"));
+                            comicBook.setSummary((String)document.get("summany"));
+                            comicBook.setTitle((String)document.get("title"));
+
+                            listComicBooks.add(comicBook);
+                        }
+                        listAdapter = new AdapterComicBook(getActivity(), R.layout.result_card, listComicBooks);
+                        listView.setAdapter(listAdapter);
+
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Bundle b = new Bundle();
+                                Fragment comic_intro_page = new Comic_Introduction_Fragment_Activity();
+                                b.putString("comic_id", listComicBooks.get(position).getId());
+
+                                comic_intro_page.setArguments(b);
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.frag_container,comic_intro_page).addToBackStack(null).commit();
+                            }
+                        });
+
+                    }
                 }
             }
         });
-
 
         return view;
     }
     private AdapterView.OnItemClickListener messageClickedHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView parent, View v, int position, long id) {
-            // Do something in response to the click
+            Log.i("Vị trí", "onItemClick: " + v.getTag(position));
         }
     };
 }
