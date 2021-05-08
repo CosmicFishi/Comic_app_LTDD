@@ -44,8 +44,8 @@ public class Commicad extends BaseAdapter{
             convertView = layoutInflater.inflate( R.layout.comic, null);
             holder = new ViewHolder();
             holder.flagView = (ImageView) convertView.findViewById(R.id.imageView_flag);
-            holder.countryNameView = (TextView) convertView.findViewById(R.id.textView_countryName);
-            holder.populationView = (TextView) convertView.findViewById(R.id.textView_population);
+            holder.countryNameView = (TextView) convertView.findViewById(R.id.textViewComicName);
+            holder.populationView = (TextView) convertView.findViewById(R.id.textViewView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

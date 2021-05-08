@@ -12,13 +12,15 @@ public class ComicBook {
     private String summary;
     private String length;
     private String title;
+    private Long view;
     private List<String> chapterList = new ArrayList<>();
 
     public ComicBook() {}
-    public ComicBook(String tieude,String anh,String author){
-        this.title = tieude;
-        this.author = author;
-        this.image = anh;
+
+    public ComicBook(String title, String image, Long view){
+        this.title = title;
+        this.setView(view);
+        this.image = image;
     }
     public List getChapterList() {
         return chapterList;
@@ -90,5 +92,13 @@ public class ComicBook {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Long getView() {
+        return view;
+    }
+
+    public void setView(Long view) {
+        this.view = view;
     }
 }

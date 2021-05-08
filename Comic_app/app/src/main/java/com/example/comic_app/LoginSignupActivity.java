@@ -87,11 +87,12 @@ public class LoginSignupActivity extends Activity {
 
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
+            String confirmPassword = editTextConfirmPassword.getText().toString();
 
             if(email.isEmpty() && password.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please enter the form.", Toast.LENGTH_SHORT).show();
-            } else if (editTextPassword.getText().toString() != editTextConfirmPassword.getText().toString()){
-                Toast.makeText(getApplicationContext(), "Password confirm not correct", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            } else if (!password.equals(confirmPassword)){
+                Toast.makeText(getApplicationContext(), "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
             } else if (checkValidEmailAndPassword(email,password)) {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -105,7 +106,7 @@ public class LoginSignupActivity extends Activity {
                                     auth.getCurrentUser().updateProfile(profileUpdates);
                                     changeMainActivity();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Failed: create account, please try again.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Không thể tạo tài khoản, hãy thử lại sau.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -123,7 +124,7 @@ public class LoginSignupActivity extends Activity {
             String password = editTextPassword.getText().toString();
 
             if(email.isEmpty() && password.isEmpty() ) {
-                Toast.makeText(getApplicationContext(), "Please enter the correct information", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin.", Toast.LENGTH_SHORT).show();
             } else if (checkValidEmailAndPassword(email, password)) {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -132,7 +133,7 @@ public class LoginSignupActivity extends Activity {
                                 if (task.isSuccessful()) {
                                     changeMainActivity();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Sai mail hay tài khoản.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -215,7 +216,7 @@ public class LoginSignupActivity extends Activity {
     public void adduserDetail(String phone){
         Map<String, Object> user = new HashMap<>();
         user.put("comicHistory", new ArrayList<String>());
-        user.put("favouriteComic", new ArrayList<String>());
+        user.put("favoriteComic", new ArrayList<String>());
         user.put("phone", phone);
 
         fireStore.collection("user").document(mAuth.getUid())
@@ -223,7 +224,7 @@ public class LoginSignupActivity extends Activity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "ERROR create profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "ERROR when creating profile", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
