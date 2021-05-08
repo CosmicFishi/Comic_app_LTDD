@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/textViewComicName"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:text="Title"
             android:textSize="22sp"/>
 

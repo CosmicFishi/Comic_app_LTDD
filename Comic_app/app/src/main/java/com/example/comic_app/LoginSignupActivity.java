@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -53,9 +54,9 @@ public class LoginSignupActivity extends Activity {
     private final String emailRegex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private final String passRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
 
-    TextView textViewTitle;
+    TextView textView;
     EditText editTextUsername, editTextPassword, editTextDisplayName, editTextPhone, editTextConfirmPassword;
-    Button btnLogin, btnLoginGoogle, btnSignUp;
+    Button btnLogin, btnLoginGoogle, btnSignUp,btnSignUpView,btnLoginView;
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth auth;
 
@@ -79,11 +80,12 @@ public class LoginSignupActivity extends Activity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
         btnSignUp.setOnClickListener(v -> {
-            if (currentPage != EnumPage.REGISTER){
-                switchPage(EnumPage.REGISTER);
-                return;
-            }
+//            if (currentPage != EnumPage.REGISTER){
+//                switchPage(EnumPage.REGISTER);
+//                return;
+//            }
 
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
@@ -114,11 +116,23 @@ public class LoginSignupActivity extends Activity {
 
         });
 
-        btnLogin.setOnClickListener(v -> {
+        btnSignUpView.setOnClickListener(v -> {
+            if (currentPage != EnumPage.REGISTER){
+                switchPage(EnumPage.REGISTER);
+                return;
+            }
+        });
+        btnLoginView.setOnClickListener(v -> {
             if (currentPage != EnumPage.LOGIN){
                 switchPage(EnumPage.LOGIN);
                 return;
-            }
+            }});
+
+            btnLogin.setOnClickListener(v -> {
+//            if (currentPage != EnumPage.LOGIN){
+//                switchPage(EnumPage.LOGIN);
+//                return;
+//            }
 
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
@@ -167,7 +181,9 @@ public class LoginSignupActivity extends Activity {
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
-        textViewTitle = findViewById(R.id.textViewTitle);
+        btnLoginView = findViewById( R.id.btnLoginView );
+        btnSignUpView = findViewById( R.id.btnSignUpView );
+        textView = findViewById( R.id.txtView);
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -231,20 +247,36 @@ public class LoginSignupActivity extends Activity {
 
     private void switchPage(EnumPage page){
         if (page == EnumPage.LOGIN){
-            textViewTitle.setText("LOGIN");
+           // textViewTitle.setText("LOGIN");
             editTextDisplayName.setVisibility(View.GONE);
             editTextPhone.setVisibility(View.GONE);
             editTextConfirmPassword.setVisibility(View.GONE);
             currentPage = EnumPage.LOGIN;
             editTextUsername.requestFocus();
+            btnSignUp.setVisibility(View.GONE);
+            btnLoginGoogle.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+            btnLoginView.setTextColor( Color.BLACK);
+            btnSignUpView.setTextColor( Color.GRAY);
+            btnLoginView.setBackgroundResource(R.drawable.bt_line_border);
+            btnSignUpView.setBackgroundResource(R.drawable.bt_line_border_white);
         }
         else {
-            textViewTitle.setText("RESIGTER");
+            //textViewTitle.setText("RESIGTER");
             editTextDisplayName.setVisibility(View.VISIBLE);
             editTextPhone.setVisibility(View.VISIBLE);
             editTextConfirmPassword.setVisibility(View.VISIBLE);
             currentPage = EnumPage.REGISTER;
             editTextDisplayName.requestFocus();
+            btnLogin.setVisibility(View.GONE);
+            btnSignUp.setVisibility(View.VISIBLE);
+            btnLoginGoogle.setVisibility(View.GONE);
+            btnSignUpView.setTextColor( Color.BLACK);
+            btnLoginView.setTextColor( Color.GRAY);
+            textView.setVisibility(View.GONE);
+            btnSignUpView.setBackgroundResource(R.drawable.bt_line_border);
+            btnLoginView.setBackgroundResource(R.drawable.bt_line_border_white);
         }
     }
 
