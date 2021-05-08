@@ -10,9 +10,12 @@
         android:id="@+id/et_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search here !!!"
+        android:maxLines="1"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:hint="Nhập tên truyện để tìm!"
         android:layout_margin="10dp"
-        android:textSize="28sp" />
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/listView"
