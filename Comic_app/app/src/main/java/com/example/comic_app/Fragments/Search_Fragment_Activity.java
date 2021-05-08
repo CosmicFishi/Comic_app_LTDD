@@ -1,5 +1,6 @@
 package com.example.comic_app.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.comic_app.ManageListViewComic;
 import com.example.comic_app.R;
 import com.example.comic_app.Utils;
 import com.example.comic_app.adapter.AdapterComicBook;
@@ -37,10 +39,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Search_Fragment_Activity extends Fragment {
+public class Search_Fragment_Activity extends ManageListViewComic {
     FirebaseFirestore fireStore;
-    ListView listView;
-    ListAdapter listAdapter;
     EditText editText;
 
     @Nullable
@@ -55,7 +55,6 @@ public class Search_Fragment_Activity extends Fragment {
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                 if(actionId == EditorInfo.IME_ACTION_SEARCH) {
                     listView.setAdapter(null);
                     search(editText.getText().toString().trim());
@@ -71,72 +70,23 @@ public class Search_Fragment_Activity extends Fragment {
     private void search(String kw) {
         kw = kw.toUpperCase();
         if(kw.length() != 0) {
-            Query query = fireStore.collection("comic_book")
+            query = fireStore.collection("comic_book")
                     .orderBy("title").startAt(kw).limit(10);
-            setResultData(query);
+            setResultData(getContext(), getActivity());
         } else {
-            Query query = fireStore.collection("comic_book")
+            query = fireStore.collection("comic_book")
                     .orderBy("title", Query.Direction.DESCENDING).limit(10);
-            setResultData(query);
+            setResultData(getContext(), getActivity());
         }
-    }
-
-    private void setResultData(Query query) {
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(getActivity() == null) {
-                    return;
-                } else {
-                    if (task.isSuccessful()) {
-                        List<ComicBook> listComicBooks = new ArrayList<>();
-
-                        QuerySnapshot documents = task.getResult();
-
-                        if(documents.size() == 0) {
-                            Toast.makeText(getContext(), "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        for (QueryDocumentSnapshot document : documents) {
-                            ComicBook comicBook = new ComicBook();
-
-                            comicBook.setId(document.getId());
-                            comicBook.setChapterList((List<String>)document.get("chapterList"));
-                            comicBook.setAuthor((String)document.get("author"));
-                            comicBook.setCategory((List<Integer>)document.get("category"));
-                            comicBook.setImage((String)document.get("image"));
-                            comicBook.setLength((String)document.get("length"));
-                            comicBook.setStatus((String)document.get("status"));
-                            comicBook.setSummary((String)document.get("summany"));
-                            comicBook.setTitle((String)document.get("title"));
-
-                            listComicBooks.add(comicBook);
-                        }
-                        listAdapter = new AdapterComicBook(getActivity(), R.layout.result_card, listComicBooks);
-                        listView.setAdapter(listAdapter);
-
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Bundle b = new Bundle();
-                                Fragment comic_intro_page = new Comic_Introduction_Fragment_Activity();
-                                b.putString("comic_id", listComicBooks.get(position).getId());
-
-                                comic_intro_page.setArguments(b);
-                                getActivity().getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.frag_container,comic_intro_page).addToBackStack(null).commit();
-                            }
-                        });
-
-                    }
-                }
-            }
-        });
     }
 
     private void bindUI(View view) {
         listView =  (ListView)view.findViewById(R.id.listView);
         editText = (EditText)view.findViewById(R.id.et_search_bar);
+    }
+
+    @Override
+    protected ListAdapter setListAdapter(List<ComicBook> list) {
+        return new AdapterComicBook(getActivity(), R.layout.result_card, list);
     }
 }
