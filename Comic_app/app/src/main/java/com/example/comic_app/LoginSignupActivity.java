@@ -203,7 +203,7 @@ public class LoginSignupActivity extends Activity {
         Map<String, Object> user = new HashMap<>();
         user.put("comicHistory", new ArrayList<String>());
         user.put("favouriteComic", new ArrayList<String>());
-        user.put("phone", "");
+        user.put("phone", "Not set");
 
         fireStore.collection("user").document(mAuth.getUid())
                 .set(user, SetOptions.merge())

@@ -46,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+
 //        setContentView(R.layout.activity_main);
         createNarbar();
+
         setContentView(R.layout.comic_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
 
@@ -59,43 +61,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frag_container,Home_Fragment)
                 .commit();
-
-//        bidingUI();
-
-//        Error mainthreat and async
-//        imageView.setImageBitmap(new Utils().getImage(personAvatar.toString()));
-
-//        fireStore = FirebaseFirestore.getInstance();
-//
-//        btnAPI.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fireStore.collection("category").get()
-//                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                List<Category> list = new ArrayList<>();
-//                                if (task.isSuccessful()){
-//                                    for (QueryDocumentSnapshot document : task.getResult()){
-//                                        Category cate = document.toObject(Category.class);
-//                                        list.add(cate);
-//                                    }
-//                                    editText.setText(list.toString());
-//                                }else {
-//                                    Log.w("ERROR======", "ERROR", task.getException());
-//                                }
-//                            }
-//                        });
-//            }
-//        });
-//
-//        btnSignOut.setOnClickListener(v -> {
-//            FirebaseAuth.getInstance().signOut();
-//            changeLoginActivity();
-//        });
-
-//        header.setText("UserId: "+ personId);
-
 
     }
 
@@ -141,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
                 };
     }
+
     public void changeLoginActivity() {
         Intent intent = new Intent(this, LoginSignupActivity.class);
         startActivity(intent);

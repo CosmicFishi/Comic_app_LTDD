@@ -2,19 +2,25 @@ package com.example.comic_app.Fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.comic_app.R;
+import com.example.comic_app.Utils;
 import com.example.comic_app.adapter.AdapterComicBook;
 import com.example.comic_app.model.ComicBook;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,19 +41,47 @@ public class Search_Fragment_Activity extends Fragment {
     FirebaseFirestore fireStore;
     ListView listView;
     ListAdapter listAdapter;
-    List<ComicBook> listComics;
+    EditText editText;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.comic_search_page,container,false);
-
-        listView = view.findViewById(R.id.listView);
+        View search_view =inflater.inflate(R.layout.comic_search_page,container,false);
+        bindUI(search_view);
         fireStore = FirebaseFirestore.getInstance();
 
-        Query query = fireStore.collection("comic_book")
-                .orderBy("title", Query.Direction.DESCENDING).limit(10);
+        search("");
 
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    listView.setAdapter(null);
+                    search(editText.getText().toString().trim());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        return search_view;
+    }
+
+    private void search(String kw) {
+        kw = kw.toUpperCase();
+        if(kw.length() != 0) {
+            Query query = fireStore.collection("comic_book")
+                    .orderBy("title").startAt(kw).limit(10);
+            setResultData(query);
+        } else {
+            Query query = fireStore.collection("comic_book")
+                    .orderBy("title", Query.Direction.DESCENDING).limit(10);
+            setResultData(query);
+        }
+    }
+
+    private void setResultData(Query query) {
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -57,7 +91,14 @@ public class Search_Fragment_Activity extends Fragment {
                     if (task.isSuccessful()) {
                         List<ComicBook> listComicBooks = new ArrayList<>();
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        QuerySnapshot documents = task.getResult();
+
+                        if(documents.size() == 0) {
+                            Toast.makeText(getContext(), "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        for (QueryDocumentSnapshot document : documents) {
                             ComicBook comicBook = new ComicBook();
 
                             comicBook.setId(document.getId());
@@ -92,12 +133,10 @@ public class Search_Fragment_Activity extends Fragment {
                 }
             }
         });
-
-        return view;
     }
-    private AdapterView.OnItemClickListener messageClickedHandler = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView parent, View v, int position, long id) {
-            Log.i("Vị trí", "onItemClick: " + v.getTag(position));
-        }
-    };
+
+    private void bindUI(View view) {
+        listView =  (ListView)view.findViewById(R.id.listView);
+        editText = (EditText)view.findViewById(R.id.et_search_bar);
+    }
 }
