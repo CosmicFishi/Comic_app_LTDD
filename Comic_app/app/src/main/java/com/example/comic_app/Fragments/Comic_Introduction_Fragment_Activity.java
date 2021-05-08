@@ -22,8 +22,10 @@ import com.example.comic_app.R;
 import com.example.comic_app.Utils;
 import com.example.comic_app.model.ComicBook;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +40,7 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
     private Bundle bundle;
     private ArrayList<String> currentChapterList = new ArrayList<>();
     FirebaseFirestore db;
+    private FirebaseAuth mAuth;
     FirebaseStorage storage;
     Button btn_add_fav, btn_view, btn_view_first_chapter;
     ImageView imageView;
@@ -50,6 +53,7 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
 
         bindUI(comic_introduction_view);
         bundle = this.getArguments();
+        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
 
@@ -59,7 +63,19 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
         btn_add_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                db.collection("user")
+                        .document(mAuth.getUid()).update("favoriteComic",bundle.getString("comic_id"))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i("Updated fav list", "onSuccess: Updated favorite list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Updated fav list", "onFailure: Couldn't updated favorite list");
+                    }
+                });
             }
         });
 
