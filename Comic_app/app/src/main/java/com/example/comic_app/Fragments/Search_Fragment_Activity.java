@@ -35,7 +35,6 @@ public class Search_Fragment_Activity extends Fragment {
     FirebaseFirestore fireStore;
     ListView listView;
     ListAdapter listAdapter;
-    List<ComicBook> listComics;
 
     @Nullable
     @Override
@@ -95,9 +94,4 @@ public class Search_Fragment_Activity extends Fragment {
 
         return view;
     }
-    private AdapterView.OnItemClickListener messageClickedHandler = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView parent, View v, int position, long id) {
-            Log.i("Vị trí", "onItemClick: " + v.getTag(position));
-        }
-    };
 }

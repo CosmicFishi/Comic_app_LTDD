@@ -77,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-//        setContentView(R.layout.activity_main);
-
         setContentView(R.layout.comic_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
 
@@ -91,53 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.frag_container,Home_Fragment)
                 .commit();
 
-//        bidingUI();
-
-//        Error mainthreat and async
-//        imageView.setImageBitmap(new Utils().getImage(personAvatar.toString()));
-
-//        fireStore = FirebaseFirestore.getInstance();
-//
-//        btnAPI.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fireStore.collection("category").get()
-//                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                List<Category> list = new ArrayList<>();
-//                                if (task.isSuccessful()){
-//                                    for (QueryDocumentSnapshot document : task.getResult()){
-//                                        Category cate = document.toObject(Category.class);
-//                                        list.add(cate);
-//                                    }
-//                                    editText.setText(list.toString());
-//                                }else {
-//                                    Log.w("ERROR======", "ERROR", task.getException());
-//                                }
-//                            }
-//                        });
-//            }
-//        });
-//
-//        btnSignOut.setOnClickListener(v -> {
-//            FirebaseAuth.getInstance().signOut();
-//            changeLoginActivity();
-//        });
-
-//        header.setText("UserId: "+ personId);
-
-
     }
-
-//    public void bidingUI(){
-//        btnAPI = findViewById(R.id.btnAPI);
-//        header = findViewById(R.id.header);
-//        editText = findViewById(R.id.editText);
-//        btnSignOut = findViewById(R.id.btnSignOut);
-//        imageView = findViewById(R.id.imageView);
-//    }
-
 
     public void changeLoginActivity() {
         Intent intent = new Intent(this, LoginSignupActivity.class);
