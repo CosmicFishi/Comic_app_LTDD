@@ -108,7 +108,7 @@ public class Profile_Fragment_Activity extends Fragment {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            List<String> list = (ArrayList) document.get("favouriteComic");
+                            List<String> list = (ArrayList) document.get("favoriteComic");
                             String phone = (String) document.get("phone");
                             txt_num_fav.setText(String.valueOf(list.size()));
                             txt_u_phone.setText(phone);

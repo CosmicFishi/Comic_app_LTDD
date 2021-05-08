@@ -26,6 +26,7 @@ public class Home_Fragment_Activity extends Fragment {
         listView = bindUI( setting_view );
         listView.setAdapter( new Commicad( getActivity(), image_details ) );
         return setting_view;
+        
     }
     private List<ComicBook> getListData() {
         List<ComicBook> list = new ArrayList<ComicBook >();

@@ -87,10 +87,11 @@ public class LoginSignupActivity extends Activity {
 
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
+            String confirmPassword = editTextConfirmPassword.getText().toString();
 
             if(email.isEmpty() && password.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            } else if (!editTextPassword.getText().toString().equals(editTextConfirmPassword.getText().toString())){
+            } else if (!password.equals(confirmPassword)){
                 Toast.makeText(getApplicationContext(), "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
             } else if (checkValidEmailAndPassword(email,password)) {
                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -123,7 +124,7 @@ public class LoginSignupActivity extends Activity {
             String password = editTextPassword.getText().toString();
 
             if(email.isEmpty() && password.isEmpty() ) {
-                Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin.", Toast.LENGTH_SHORT).show();
             } else if (checkValidEmailAndPassword(email, password)) {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -132,7 +133,7 @@ public class LoginSignupActivity extends Activity {
                                 if (task.isSuccessful()) {
                                     changeMainActivity();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Sai mail hay tài khoản.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

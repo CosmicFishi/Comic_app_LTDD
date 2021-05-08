@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,6 +47,7 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
     Button btn_add_fav, btn_view, btn_view_first_chapter;
     ImageView imageView;
     TextView txt_name, txt_author, txt_view, txt_status, txt_chapters, txt_description;
+    private boolean fav_flag = false;
 
     @Nullable
     @Override
@@ -63,19 +66,43 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
         btn_add_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.collection("user")
-                        .document(mAuth.getUid()).update("favoriteComic",bundle.getString("comic_id"))
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.i("Updated fav list", "onSuccess: Updated favorite list");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Updated fav list", "onFailure: Couldn't updated favorite list");
-                    }
-                });
+                if(fav_flag) {
+                    db.collection("user")
+                            .document(mAuth.getUid()).update("favoriteComic",FieldValue.arrayRemove(bundle.getString("comic_id")))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    btn_add_fav.setText("Favorite");
+                                    fav_flag = false;
+                                    Toast.makeText(getContext(), "Successfully unfavorite", Toast.LENGTH_SHORT).show();
+                                    Log.i("Updated fav list", "onSuccess: Updated favorite list");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Failed to unfavorite", Toast.LENGTH_SHORT).show();
+                            Log.w("Updated fav list", "onFailure: Couldn't updated favorite list");
+                        }
+                    });
+                } else {
+                    db.collection("user")
+                            .document(mAuth.getUid()).update("favoriteComic",FieldValue.arrayUnion(bundle.getString("comic_id")))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    btn_add_fav.setText("Unfav");
+                                    fav_flag = true;
+                                    Toast.makeText(getContext(), "Successfully favorite", Toast.LENGTH_SHORT).show();
+                                    Log.i("Updated fav list", "onSuccess: Updated favorite list");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Failed to favorite", Toast.LENGTH_SHORT).show();
+                            Log.w("Updated fav list", "onFailure: Couldn't updated favorite list");
+                        }
+                    });
+                }
             }
         });
 
@@ -125,6 +152,7 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                         ComicBook comicBook = new ComicBook();
                         DocumentSnapshot document = task.getResult();
 //                        comicBook = task.getResult().toObject(ComicBook.class);
+                        comicBook.setId(document.getId());
                         comicBook.setChapterList((List<String>) document.get("chapterList"));
                         comicBook.setAuthor((String)document.get("author"));
                         comicBook.setCategory((List<Integer>)document.get("category"));
@@ -145,6 +173,27 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                                     }
                                 });
                         setData(comicBook);
+
+                        db.collection("user").document(mAuth.getUid()).get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                if(getActivity() == null) {
+                                    return;
+                                } else {
+                                    if (documentSnapshot.exists()) {
+                                        for (String id : new ArrayList<String>((List<String>) documentSnapshot.get("favoriteComic"))) {
+                                            if (comicBook.getId().equals(id)) {
+                                                btn_add_fav.setText("Unfav");
+                                                fav_flag = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
 
