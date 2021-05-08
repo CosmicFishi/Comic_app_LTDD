@@ -87,10 +87,11 @@ public class LoginSignupActivity extends Activity {
 
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
+            String confirmPassword = editTextConfirmPassword.getText().toString();
 
             if(email.isEmpty() && password.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter the form.", Toast.LENGTH_SHORT).show();
-            } else if (editTextPassword.getText().toString() != editTextConfirmPassword.getText().toString()){
+            } else if (!password.equals(confirmPassword)){
                 Toast.makeText(getApplicationContext(), "Password confirm not correct", Toast.LENGTH_SHORT).show();
             } else if (checkValidEmailAndPassword(email,password)) {
                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -132,7 +133,7 @@ public class LoginSignupActivity extends Activity {
                                 if (task.isSuccessful()) {
                                     changeMainActivity();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Incorrect account or password.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -215,7 +216,7 @@ public class LoginSignupActivity extends Activity {
     public void adduserDetail(String phone){
         Map<String, Object> user = new HashMap<>();
         user.put("comicHistory", new ArrayList<String>());
-        user.put("favouriteComic", new ArrayList<String>());
+        user.put("favoriteComic", new ArrayList<String>());
         user.put("phone", phone);
 
         fireStore.collection("user").document(mAuth.getUid())
