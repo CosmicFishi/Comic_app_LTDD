@@ -83,6 +83,7 @@ public class Search_Fragment_Activity extends ManageListViewComic {
     private void bindUI(View view) {
         listView =  (ListView)view.findViewById(R.id.listView);
         editText = (EditText)view.findViewById(R.id.et_search_bar);
+        editText.requestFocus();
     }
 
     @Override

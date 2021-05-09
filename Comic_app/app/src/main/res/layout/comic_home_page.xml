@@ -127,10 +127,15 @@
             <LinearLayout
                 android:padding="10dp"
                 android:layout_below="@+id/textView2"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <ListView
+                    android:id="@+id/listViewCategory"
+                    android:layout_width="1000dp"
+                    android:layout_height="100dp"
+                    android:scrollbars="horizontal"/>
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="50dp"

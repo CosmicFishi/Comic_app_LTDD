@@ -247,7 +247,6 @@ public class LoginSignupActivity extends Activity {
 
     private void switchPage(EnumPage page){
         if (page == EnumPage.LOGIN){
-           // textViewTitle.setText("LOGIN");
             editTextDisplayName.setVisibility(View.GONE);
             editTextPhone.setVisibility(View.GONE);
             editTextConfirmPassword.setVisibility(View.GONE);
@@ -263,7 +262,6 @@ public class LoginSignupActivity extends Activity {
             btnSignUpView.setBackgroundResource(R.drawable.bt_line_border_white);
         }
         else {
-            //textViewTitle.setText("RESIGTER");
             editTextDisplayName.setVisibility(View.VISIBLE);
             editTextPhone.setVisibility(View.VISIBLE);
             editTextConfirmPassword.setVisibility(View.VISIBLE);

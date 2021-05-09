@@ -49,7 +49,7 @@ public class AdapterNewComicBook extends ArrayAdapter<ComicBook> {
         ComicBook comicBook = getItem(position);
 
         if (comicBook != null) {
-            ImageView imgComic = (ImageView) v.findViewById(R.id.img_comic);
+            ImageView imgComic = (ImageView) v.findViewById(R.id.imageView_flag);
             TextView textViewComicName = (TextView) v.findViewById(R.id.textViewComicName);
             TextView textViewView = (TextView) v.findViewById(R.id.textViewView);
 
