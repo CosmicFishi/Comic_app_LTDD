@@ -129,6 +129,8 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                 b.putInt("chapter_list_length", bundle.getStringArrayList("chapter_list").size());
                 b.putInt("comic_num", 0);
 
+                addViewToComic();
+
                 Fragment read_page = new Comic_Read_Fragment_Activity();
                 read_page.setArguments(b);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, read_page).addToBackStack(null).commit();
@@ -161,6 +163,7 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                         comicBook.setStatus((String)document.get("status"));
                         comicBook.setSummary((String)document.get("summary"));
                         comicBook.setTitle((String)document.get("title"));
+                        comicBook.setView((Long)document.get("view"));
 
                         bundle.putStringArrayList("chapter_list",new ArrayList(comicBook.getChapterList()));
 
@@ -200,6 +203,11 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
             }
         });
     }
+    private void addViewToComic() {
+        DocumentReference dr = db.collection("comic_book")
+                .document(bundle.getString("comic_id"));
+        dr.update("view", FieldValue.increment(1));
+    }
     private void bindUI(View view) {
         imageView = (ImageView)view.findViewById(R.id.img_c_thumbnail);
         txt_author = (TextView) view.findViewById(R.id.txt_c_author);
@@ -218,5 +226,6 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
         txt_description.setText(comicBook.getSummary());
         txt_status.setText(comicBook.getStatus());
         txt_chapters.setText(comicBook.getLength());
+        txt_view.setText(String.valueOf(comicBook.getView()));
     }
 }

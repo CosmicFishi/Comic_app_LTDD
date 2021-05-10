@@ -14,6 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.comic_app.R;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -47,11 +51,19 @@ public class Comic_ChapterList_Fragment_Activity extends Fragment {
                 b.putInt("chapter_num", position);
                 b.putInt("chapter_list_length", chapterList.size());
 
+                addViewToComic();
+
                 Fragment read_page = new Comic_Read_Fragment_Activity();
                 read_page.setArguments(b);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, read_page).addToBackStack(null).commit();
             }
         });
+    }
+    private void addViewToComic() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference dr = db.collection("comic_book")
+                .document(bundle.getString("comic_id"));
+        dr.update("view", FieldValue.increment(1));
     }
 
     private void bindUI(View view) {

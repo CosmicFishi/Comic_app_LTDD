@@ -21,8 +21,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firestore.v1.DocumentTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +94,7 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num >=0 ) {
                     chapter_num = chapter_num - 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
+                    addViewToComic();
                 }
             }
         });
@@ -101,6 +104,7 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num >=0 ) {
                     chapter_num = chapter_num - 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
+                    addViewToComic();
                 }
             }
         });
@@ -111,6 +115,7 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num < chapter_list_length) {
                     chapter_num = chapter_num + 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
+                    addViewToComic();
                 }
             }
         });
@@ -121,9 +126,16 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num < chapter_list_length) {
                     chapter_num = chapter_num + 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
+                    addViewToComic();
                 }
             }
         });
+    }
+
+    private void addViewToComic() {
+        DocumentReference dr = db.collection("comic_book")
+                .document(bundle.getString("comic_id"));
+        dr.update("view", FieldValue.increment(1));
     }
 
     private void bindUI(View view) {
