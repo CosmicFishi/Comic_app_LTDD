@@ -51,7 +51,8 @@ public class AdapterNewComicBook extends ArrayAdapter<ComicBook> {
         if (comicBook != null) {
             ImageView imgComic = (ImageView) v.findViewById(R.id.imageView_flag);
             TextView textViewComicName = (TextView) v.findViewById(R.id.textViewComicName);
-            TextView textViewView = (TextView) v.findViewById(R.id.textViewView);
+            TextView textViewView = (TextView) v.findViewById(R.id.txt_c_views);
+            TextView textViewAuthor = (TextView) v.findViewById(R.id.txt_c_author);
 
             if (imgComic != null) {
                 sr.child("images/" + comicBook.getImage()).getDownloadUrl()
@@ -67,7 +68,10 @@ public class AdapterNewComicBook extends ArrayAdapter<ComicBook> {
                 textViewComicName.setText(comicBook.getTitle());
             }
             if (textViewView != null) {
-                textViewView.setText("View "+String.valueOf(comicBook.getView()));
+                textViewView.setText(String.valueOf(comicBook.getView()));
+            }
+            if (textViewAuthor!= null) {
+                textViewAuthor.setText(comicBook.getAuthor());
             }
         }
 

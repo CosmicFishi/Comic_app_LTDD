@@ -30,11 +30,11 @@ public abstract class ManageListViewComic extends Fragment{
     protected ListView listView;
 
 
-    public void setResultData(Context context, FragmentActivity activity){
+    public void setResultData(){
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(activity == null) {
+                if(getActivity() == null) {
                     return;
                 }
                 if (task.isSuccessful()) {
@@ -43,7 +43,7 @@ public abstract class ManageListViewComic extends Fragment{
                     QuerySnapshot documents = task.getResult();
 
                     if(documents.size() == 0) {
-                        Toast.makeText(context, "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -73,7 +73,7 @@ public abstract class ManageListViewComic extends Fragment{
                             b.putString("comic_id", listComicBooks.get(position).getId());
 
                             comic_intro_page.setArguments(b);
-                            activity.getSupportFragmentManager().beginTransaction()
+                            getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.frag_container,comic_intro_page).addToBackStack(null).commit();
                         }
                     });

@@ -43,7 +43,7 @@ public class Profile_Fragment_Activity extends Fragment {
     FirebaseFirestore fireStore;
 
     TextView txt_email, txt_name, txt_num_fav, txt_u_phone;
-    Button btn_settings_page, btn_log_out;
+    Button btn_settings_page, btn_log_out, btn_move_fav;
     ImageView img_thumbnail;
 
     @Nullable
@@ -55,6 +55,13 @@ public class Profile_Fragment_Activity extends Fragment {
         View home_view = inflater.inflate(R.layout.comic_user_profile_page,container,false);
         bindUI(home_view);
 
+        btn_move_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fav_page = new Favorite_Fragment_Activity();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container,fav_page).commit();
+            }
+        });
 
         btn_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +98,6 @@ public class Profile_Fragment_Activity extends Fragment {
             }
         });
 
-        //need checking
         if(currentUser.getPhotoUrl() != null ) {
             img_thumbnail.setImageURI(currentUser.getPhotoUrl());
             new DownloadImageTask(img_thumbnail).execute(currentUser.getPhotoUrl().toString());
@@ -127,6 +133,7 @@ public class Profile_Fragment_Activity extends Fragment {
         txt_name = (TextView)view.findViewById(R.id.txt_u_name);
         txt_num_fav = (TextView)view.findViewById(R.id.txt_u_num_fav);
         txt_u_phone = (TextView)view.findViewById(R.id.txt_u_phone);
+        btn_move_fav = (Button)view.findViewById(R.id.btn_move_fav);
         img_thumbnail = (ImageView)view.findViewById(R.id.img_thumbnail);
     }
 

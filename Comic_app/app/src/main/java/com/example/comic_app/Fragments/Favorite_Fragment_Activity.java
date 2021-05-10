@@ -48,7 +48,7 @@ public class Favorite_Fragment_Activity extends ManageListViewComic {
                         List<String> listDocs = (ArrayList)documentSnapshot.get("favoriteComic");
                         if (listDocs.size() == 0) return;
                         query = fireStore.collection("comic_book").whereIn("slugg", listDocs);
-                        setResultData(getContext(), getActivity());
+                        setResultData();
                     }
                 });
 

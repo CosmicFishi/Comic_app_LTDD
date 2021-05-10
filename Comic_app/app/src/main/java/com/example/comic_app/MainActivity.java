@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-//        setContentView(R.layout.activity_main);
         createNarbar();
 
         setContentView(R.layout.comic_main);
@@ -63,14 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
     }
-
-//    public void bidingUI(){
-//        btnAPI = findViewById(R.id.btnAPI);
-//        header = findViewById(R.id.header);
-//        editText = findViewById(R.id.editText);
-//        btnSignOut = findViewById(R.id.btnSignOut);
-//        imageView = findViewById(R.id.imageView);
-//    }
 
     public void createNarbar(){
         navigationItemSelectedListener = new

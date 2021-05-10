@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView     xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
@@ -27,54 +28,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
+            <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="74dp"
                 android:layout_height="67dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/avatar"
+                app:srcCompat="@drawable/ic_baseline_profile"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/Vien"
                 app:layout_constraintHorizontal_bias="0.089"
                 app:layout_constraintStart_toStartOf="@id/topView"
                 app:layout_constraintTop_toTopOf="@id/topView"
                 app:layout_constraintVertical_bias="0.229"
-                app:riv_border_color="#53D2DB"
-                app:riv_border_width="2dip"
-                app:riv_corner_radius="30dip"
-                app:riv_mutate_background="true" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:shadowColor="#3C3F41"
-                android:text="@string/hi_y_n"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/Vien"
-                app:layout_constraintHorizontal_bias="0.328"
-                app:layout_constraintStart_toStartOf="@id/topView"
-                app:layout_constraintTop_toTopOf="@id/topView"
-                app:layout_constraintVertical_bias="0.268" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="47dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="305dp"
-                android:layout_marginTop="78dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/topView"
-                app:layout_constraintEnd_toEndOf="@+id/topView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/topView"
-                app:layout_constraintTop_toTopOf="@+id/topView"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_baseline_notifications_24" />
+                app:tint="@color/white" />
 
             <View
                 android:id="@+id/Vien"
@@ -88,23 +54,35 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/topView"
                 app:layout_constraintTop_toTopOf="@id/topView">
-
             </View>
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imagebanner"
+            <ImageView
                 android:layout_width="350dp"
                 android:layout_height="160dp"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 android:src="@drawable/vbw1613995052"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.491"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/topView"
-                app:layout_constraintVertical_bias="0.0"
-                app:riv_border_color="#53D2DB"
-                app:riv_corner_radius="30dip" />
+                app:layout_constraintEnd_toEndOf="@id/Vien"
+                app:layout_constraintLeft_toLeftOf="@id/imageView1"
+                app:layout_constraintStart_toStartOf="@id/topView"
+                app:layout_constraintTop_toBottomOf="@id/txt_u_name"
+                app:layout_constraintVertical_bias="0.229"/>
+
+            <TextView
+                android:id="@+id/txt_u_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:shadowColor="#3C3F41"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/Vien"
+                app:layout_constraintHorizontal_bias="0.328"
+                app:layout_constraintStart_toStartOf="@id/topView"
+                app:layout_constraintTop_toTopOf="@id/topView"
+                app:layout_constraintVertical_bias="0.268" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,83 +96,11 @@
             android:textColor="#000000"
             android:textSize="25sp" />
 
-        <HorizontalScrollView
-            android:layout_above="@+id/textView2"
-            android:layout_below="@+id/textView2"
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_list_cates"/>
 
-            <LinearLayout
-                android:padding="10dp"
-                android:layout_below="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ListView
-                    android:id="@+id/listViewCategory"
-                    android:layout_width="1000dp"
-                    android:layout_height="100dp"
-                    android:scrollbars="horizontal"/>
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/home_button_cate1"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/buttoncat3"
-                    android:textSize="15dp"
-                    app:backgroundTint="@null" />
-
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/home_button_cate2"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/buttoncat2"
-                    android:textSize="16dp"
-                    app:backgroundTint="@null" />
-
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/home_button_cate3"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/buttoncat1"
-                    android:textSize="16dp"
-                    app:backgroundTint="@null" />
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/home_button_cate3"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/buttoncat1"
-                    android:textSize="16dp"
-                    app:backgroundTint="@null" />
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/home_button_cate3"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/buttoncat1"
-                    android:textSize="16dp"
-                    app:backgroundTint="@null" />
-             </LinearLayout>
-        </HorizontalScrollView>
         <TextView
             android:id="@+id/news"
             android:layout_width="wrap_content"
@@ -211,4 +117,4 @@
             android:layout_width="fill_parent"
             android:layout_height="1000dp" />
         </LinearLayout>
-</ScrollView >
+</androidx.core.widget.NestedScrollView >
