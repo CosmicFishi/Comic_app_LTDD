@@ -14,7 +14,7 @@ import com.example.comic_app.R;
 
 public class Setting_Fragment_Activity extends Fragment {
 
-    Button btn_return_profile;
+    Button btn_return_profile, btn_move_update_profile_page;
 
     @Nullable
     @Override
@@ -30,11 +30,19 @@ public class Setting_Fragment_Activity extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, profile_page).commit();
             }
         });
+        btn_move_update_profile_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment update_profile_page = new Update_Profile_Fragment_Activity();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, update_profile_page).addToBackStack(null).commit();
+            }
+        });
 
         return setting_view;
     }
 
     private void bindUI(View view) {
         btn_return_profile = (Button)view.findViewById(R.id.btn_return_profile_page);
+        btn_move_update_profile_page = (Button)view.findViewById(R.id.btn_move_change_profile);
     }
 }

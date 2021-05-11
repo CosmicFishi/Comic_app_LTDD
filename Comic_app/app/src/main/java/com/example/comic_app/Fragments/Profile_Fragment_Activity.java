@@ -94,7 +94,7 @@ public class Profile_Fragment_Activity extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment setting_page = new Setting_Fragment_Activity();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container,setting_page).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container,setting_page).addToBackStack(null).commit();
             }
         });
 
@@ -112,12 +112,16 @@ public class Profile_Fragment_Activity extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            List<String> list = (ArrayList) document.get("favoriteComic");
-                            String phone = (String) document.get("phone");
-                            txt_num_fav.setText(String.valueOf(list.size()));
-                            txt_u_phone.setText(phone);
+                        if(getActivity() == null) {
+                            return;
+                        } else {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                List<String> list = (ArrayList) document.get("favoriteComic");
+                                String phone = (String) document.get("phone");
+                                txt_num_fav.setText(String.valueOf(list.size()));
+                                txt_u_phone.setText(phone);
+                            }
                         }
                     }
                 });;

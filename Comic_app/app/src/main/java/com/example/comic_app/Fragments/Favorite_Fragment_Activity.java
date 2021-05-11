@@ -45,10 +45,14 @@ public class Favorite_Fragment_Activity extends ManageListViewComic {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        List<String> listDocs = (ArrayList)documentSnapshot.get("favoriteComic");
-                        if (listDocs.size() == 0) return;
-                        query = fireStore.collection("comic_book").whereIn("slugg", listDocs);
-                        setResultData();
+                        if(getActivity() == null) {
+                            return;
+                        } else {
+                            List<String> listDocs = (ArrayList)documentSnapshot.get("favoriteComic");
+                            if (listDocs.size() == 0) return;
+                            query = fireStore.collection("comic_book").whereIn("slugg", listDocs);
+                            setResultData();
+                        }
                     }
                 });
 

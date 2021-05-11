@@ -182,12 +182,13 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 DocumentSnapshot documentSnapshot = task.getResult();
-                                if(getActivity() == null) {
-                                    return;
-                                } else {
-                                    if (documentSnapshot.exists()) {
-                                        for (String id : new ArrayList<String>((List<String>) documentSnapshot.get("favoriteComic"))) {
-                                            if (comicBook.getId().equals(id)) {
+
+                                if (documentSnapshot.exists()) {
+                                    for (String id : new ArrayList<String>((List<String>) documentSnapshot.get("favoriteComic"))) {
+                                        if (comicBook.getId().equals(id)) {
+                                            if(getActivity() == null) {
+                                                return;
+                                            } else {
                                                 btn_add_fav.setText("Unfav");
                                                 fav_flag = true;
                                                 break;
@@ -195,6 +196,7 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                                         }
                                     }
                                 }
+
                             }
                         });
                     }

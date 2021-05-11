@@ -128,7 +128,7 @@ public class LoginSignupActivity extends Activity {
                 return;
             }});
 
-            btnLogin.setOnClickListener(v -> {
+        btnLogin.setOnClickListener(v -> {
 //            if (currentPage != EnumPage.LOGIN){
 //                switchPage(EnumPage.LOGIN);
 //                return;
@@ -225,7 +225,7 @@ public class LoginSignupActivity extends Activity {
     private boolean checkValidEmailAndPassword(String email, String password) {
         if(Utils.checkValidRegex(email, emailRegex) && Utils.checkValidRegex(password, passRegex))
             return true;
-        Toast.makeText(getApplicationContext(), "Input incorrect email or password format. Password must be strong", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Sai tài khoản hay mật khẩu. Mật khẩu phải mạnh và tối thiểu 8 ký tự", Toast.LENGTH_SHORT).show();
         return false;
     }
 

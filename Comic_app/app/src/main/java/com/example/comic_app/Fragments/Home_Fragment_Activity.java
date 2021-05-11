@@ -83,13 +83,17 @@ public class Home_Fragment_Activity extends ManageListViewComic {
         cateRef.limit(10).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                listCategory.add(document.toObject(Category.class));
-                            }
-                            adapterCategoryBook.notifyDataSetChanged();
+                        if(getActivity() == null) {
+                            return;
                         } else {
-                            Log.i("Error", "onComplete: Failed to get documents");
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    listCategory.add(document.toObject(Category.class));
+                                }
+                                adapterCategoryBook.notifyDataSetChanged();
+                            } else {
+                                Log.i("Error", "onComplete: Failed to get documents");
+                            }
                         }
                     }
                 });
