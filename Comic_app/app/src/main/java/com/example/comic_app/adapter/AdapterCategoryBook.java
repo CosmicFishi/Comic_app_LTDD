@@ -51,36 +51,6 @@ public class AdapterCategoryBook extends RecyclerView.Adapter<AdapterCategoryBoo
         return categoryList.size();
     }
 
-//    public AdapterCategoryBook(@NonNull Context context, int resource, @NonNull List<Category> objects) {
-//        super(context, resource, objects);
-//        this.resourceLayout = resource;
-//        this.mContext = context;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        View v = convertView;
-//
-//        if (v == null) {
-//            LayoutInflater vi;
-//            vi = LayoutInflater.from(mContext);
-//            v = vi.inflate(resourceLayout, null);
-//        }
-//
-//        Category category = getItem(position);
-//
-//        if (category != null) {
-//            Button btnCategory = (Button) v.findViewById(R.id.btnCategory);
-//
-//            if (btnCategory != null) {
-//                btnCategory.setText(category.getCategoryName());
-//            }
-//        }
-//
-//        return v;
-//    }
-
     public AdapterCategoryBook(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
