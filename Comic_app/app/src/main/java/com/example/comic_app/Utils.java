@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.text.Normalizer;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class Utils {
@@ -68,8 +70,7 @@ public class Utils {
         return directory.getAbsolutePath();
     }
 
-    public static void loadImageFromStorage(String path, ImageView img)
-    {
+    public static void loadImageFromStorage(String path, ImageView img) {
         try {
             File f=new File(path, "profile.jpg");
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
@@ -79,5 +80,11 @@ public class Utils {
             e.printStackTrace();
         }
 
+    }
+
+    public static String toSlug(String input) {
+        String nfdNormalizedString = Normalizer.normalize(input, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("").toLowerCase().replaceAll(" ", "-");
     }
 }

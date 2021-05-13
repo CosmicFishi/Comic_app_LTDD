@@ -46,10 +46,10 @@ public class Write_Fragment_Activity extends Fragment {
         btn_bangDieuKhien = list_comic_of_user.findViewById(R.id.btn_bangdieukhien);
         fireStore = FirebaseFirestore.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String idUser =  currentUser.getEmail();
+        String author =  currentUser.getDisplayName();
         List<ComicBook> listComicBooks = new ArrayList<>();
 
-        Query query = fireStore.collection("comic_book").whereEqualTo("author",idUser);
+        Query query = fireStore.collection("comic_book").whereEqualTo("author",author);
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

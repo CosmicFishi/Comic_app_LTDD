@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ComicBook {
     private String id;
+    private String slugg;
     private String author;
     private List<Integer> category = new ArrayList<>();
     private String image;
@@ -16,6 +17,19 @@ public class ComicBook {
     private List<String> chapterList = new ArrayList<>();
 
     public ComicBook() {}
+
+    public ComicBook(String author,List category, String image,  String summary, String title, String status, List chap,String length, String slugg){
+        this.author = author;
+        this.category = category;
+        this.image = image;
+        this.summary = summary;
+        this.title = title;
+        this.status = status;
+        this.chapterList = chap;
+        this.length = length;
+        this.slugg = slugg;
+        this.view = Long.valueOf(0);
+    }
 
     public ComicBook(String author,List category, String image,  String summary, String title, String status, List chap,String length){
         this.author = author;
