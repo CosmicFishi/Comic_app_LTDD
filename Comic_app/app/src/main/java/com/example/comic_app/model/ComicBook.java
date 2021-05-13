@@ -17,6 +17,16 @@ public class ComicBook {
 
     public ComicBook() {}
 
+    public ComicBook(String author,List category, String image,  String summary, String title, String status, List chap,String length){
+        this.author = author;
+        this.category = category;
+        this.image = image;
+        this.summary = summary;
+        this.title = title;
+        this.status = status;
+        this.chapterList = chap;
+        this.length = length;
+    }
     public ComicBook(String title, String image, Long view){
         this.title = title;
         this.setView(view);
