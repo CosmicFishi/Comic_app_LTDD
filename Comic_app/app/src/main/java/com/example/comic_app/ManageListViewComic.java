@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public abstract class ManageListViewComic extends Fragment{
     protected Query query;
     protected ListAdapter listAdapter;
     protected ListView listView;
+    protected TextView txt_error;
 
 
     public void setResultData(){
@@ -43,6 +45,59 @@ public abstract class ManageListViewComic extends Fragment{
                     QuerySnapshot documents = task.getResult();
 
                     if(documents.size() == 0) {
+                        Toast.makeText(getContext(), "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    for (QueryDocumentSnapshot document : documents) {
+                        ComicBook comicBook = new ComicBook();
+
+                        comicBook.setId(document.getId());
+                        comicBook.setChapterList((List<String>)document.get("chapterList"));
+                        comicBook.setAuthor((String)document.get("author"));
+                        comicBook.setCategory((List<Integer>)document.get("category"));
+                        comicBook.setImage((String)document.get("image"));
+                        comicBook.setLength((String)document.get("length"));
+                        comicBook.setStatus((String)document.get("status"));
+                        comicBook.setSummary((String)document.get("summany"));
+                        comicBook.setTitle((String)document.get("title"));
+                        comicBook.setView((Long)document.get("view"));
+
+                        listComicBooks.add(comicBook);
+                    }
+                    listAdapter = setListAdapter(listComicBooks);
+                    listView.setAdapter(listAdapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Bundle b = new Bundle();
+                            Fragment comic_intro_page = new Comic_Introduction_Fragment_Activity();
+                            b.putString("comic_id", listComicBooks.get(position).getId());
+
+                            comic_intro_page.setArguments(b);
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.frag_container,comic_intro_page).addToBackStack(null).commit();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public void setResultData(boolean is_category_page){
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(getActivity() == null) {
+                    return;
+                }
+                if (task.isSuccessful()) {
+                    List<ComicBook> listComicBooks = new ArrayList<>();
+
+                    QuerySnapshot documents = task.getResult();
+
+                    if(documents.size() == 0) {
+                        txt_error.setMaxLines(1);
                         Toast.makeText(getContext(), "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
                         return;
                     }

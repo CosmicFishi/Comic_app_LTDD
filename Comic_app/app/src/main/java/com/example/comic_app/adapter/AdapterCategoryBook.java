@@ -1,6 +1,8 @@
 package com.example.comic_app.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,11 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comic_app.Fragments.Search_category_Fragment_Activity;
+import com.example.comic_app.MainActivity;
 import com.example.comic_app.R;
 import com.example.comic_app.model.Category;
 
@@ -43,6 +48,20 @@ public class AdapterCategoryBook extends RecyclerView.Adapter<AdapterCategoryBoo
 
         if (category != null) {
             holder.btnCategory.setText(category.getCategoryName());
+            holder.btnCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle b = new Bundle();
+                    if(v.getContext() != null) {
+                        MainActivity mainActivity = (MainActivity) v.getContext();
+                        b.putInt("cate_id", category.getId());
+                        b.putString("cate_name", category.getCategoryName());
+                        Fragment category_list = new Search_category_Fragment_Activity();
+                        category_list.setArguments(b);
+                        mainActivity.changeToCategoryPage(category_list);
+                    }
+                }
+            });
         }
     }
 

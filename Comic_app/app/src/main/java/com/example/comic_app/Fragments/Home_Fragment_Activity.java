@@ -79,7 +79,6 @@ public class Home_Fragment_Activity extends ManageListViewComic {
         List<Category> listCategory = new ArrayList<>();
         AdapterCategoryBook adapterCategoryBook = new AdapterCategoryBook(listCategory);
         rv_list_cates.setAdapter(adapterCategoryBook);
-
         cateRef.limit(10).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -101,4 +101,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginSignupActivity.class);
         startActivity(intent);
     }
+    public void changeToCategoryPage(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.frag_container,fragment).addToBackStack(null).commit();
+    }
 }
