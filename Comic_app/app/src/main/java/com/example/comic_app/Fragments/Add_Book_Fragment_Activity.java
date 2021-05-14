@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.example.comic_app.model.ComicBook;
 import com.example.comic_app.model.ComicChapter;
 import com.example.comic_app.model.ListCategory;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +42,7 @@ import java.util.List;
 public class Add_Book_Fragment_Activity extends Fragment {
     EditText edtNameComic, edt_summary, editTextChapterName, edt_comic_content;
     Spinner spnChapter;
-    Button  btnCreateComic, btn_category;
+    Button  btnCreateComic, btn_category, btn_deleteChapterComic, btn_deleteComic;
     private Bundle bundle;
 
     FirebaseFirestore db;
@@ -86,12 +89,45 @@ public class Add_Book_Fragment_Activity extends Fragment {
                 if(selectedItem.equals("Mới")) {
                     edt_comic_content.setText("");
                     editTextChapterName.setText("");
+                    btnCreateComic.setText("Tạo");
+                    btn_deleteChapterComic.setVisibility(View.GONE);
                 } else {
+                    btnCreateComic.setText("Cập nhật");
                     edt_comic_content.setText(contentList.get(position-1).getContent());
                     editTextChapterName.setText(comicBook.getChapterList().get(position-1).toString());
+                    btn_deleteChapterComic.setVisibility(View.VISIBLE);
                 }
             }
             public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        btn_deleteChapterComic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("comic_chapter")
+                        .document(Utils.toSlug(comicBook.getSlugg()))
+                        .collection("chapter")
+                        .document(String.valueOf(spnChapter.getSelectedItemPosition()-1))
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(), "Document successfully deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Error deleting document", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition()-1);
+                db.collection("comic_book").document(comicBook.getSlugg())
+                        .update(
+                                "length", String.format("%d chương", chapterList.size() - 2),
+                                "chapterList", comicBook.getChapterList()
+                        );
+                changeFragment();
+            }
         });
 
         btnCreateComic.setOnClickListener(new View.OnClickListener() {
@@ -125,11 +161,44 @@ public class Add_Book_Fragment_Activity extends Fragment {
                         .collection("chapter")
                         .document(String.valueOf(chapter))
                         .set(new ComicChapter(edt_comic_content.getText().toString()));
-                Fragment listComicofUser = new Write_Fragment_Activity();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, listComicofUser).addToBackStack(null).commit();
+                changeFragment();
             }
         });
-
+        btn_deleteComic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("comic_chapter")
+                        .document(Utils.toSlug(comicBook.getSlugg()))
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Error deleting comic", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                db.collection("comic_book").document(comicBook.getSlugg())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Error deleting comic", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                changeFragment();
+            }
+        });
         btn_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,8 +314,15 @@ public class Add_Book_Fragment_Activity extends Fragment {
         edt_summary = view.findViewById(R.id.edt_summary);
         btnCreateComic = view.findViewById(R.id.btn_createComic);
         btn_category = view.findViewById(R.id.btn_category);
+        btn_deleteComic = view.findViewById(R.id.btn_deleteComic);
+        btn_deleteChapterComic = view.findViewById(R.id.btn_deleteChapterComic);
         editTextChapterName = view.findViewById(R.id.editTextChapterName);
         edt_comic_content = view.findViewById(R.id.edt_comic_content);
         spnChapter = view.findViewById(R.id.spn_Chapter);
+        btn_deleteChapterComic.setVisibility(View.GONE);
+    }
+    public void changeFragment(){
+        Fragment listComicofUser = new Write_Fragment_Activity();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, listComicofUser).addToBackStack(null).commit();
     }
 }
