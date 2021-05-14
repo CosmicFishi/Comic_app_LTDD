@@ -82,11 +82,6 @@ public class LoginSignupActivity extends Activity {
 
 
         btnSignUp.setOnClickListener(v -> {
-//            if (currentPage != EnumPage.REGISTER){
-//                switchPage(EnumPage.REGISTER);
-//                return;
-//            }
-
             String email = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
             String confirmPassword = editTextConfirmPassword.getText().toString();
