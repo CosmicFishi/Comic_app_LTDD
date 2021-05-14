@@ -81,6 +81,7 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                             txt_content.setText("Trang hiện tại chưa có cập nhật");
                         }
                         txt_title.setText(chapter_list.get(chapter_num));
+                        addViewToComic();
                     }
                 }
             }
@@ -94,7 +95,6 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num >=0 ) {
                     chapter_num = chapter_num - 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
-                    addViewToComic();
                 }
             }
         });
@@ -104,7 +104,6 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num >=0 ) {
                     chapter_num = chapter_num - 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
-                    addViewToComic();
                 }
             }
         });
@@ -115,7 +114,6 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num < chapter_list_length) {
                     chapter_num = chapter_num + 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
-                    addViewToComic();
                 }
             }
         });
@@ -126,7 +124,6 @@ public class Comic_Read_Fragment_Activity extends Fragment {
                 if(chapter_num < chapter_list_length) {
                     chapter_num = chapter_num + 1;
                     populateUI(bundle.getStringArrayList("chapter_list"), bundle.getString("comic_id"), chapter_num);
-                    addViewToComic();
                 }
             }
         });

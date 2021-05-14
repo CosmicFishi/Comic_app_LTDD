@@ -129,8 +129,6 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                 b.putInt("chapter_list_length", bundle.getStringArrayList("chapter_list").size());
                 b.putInt("comic_num", 0);
 
-                addViewToComic();
-
                 Fragment read_page = new Comic_Read_Fragment_Activity();
                 read_page.setArguments(b);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, read_page).addToBackStack(null).commit();
@@ -153,7 +151,6 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                     if(task.isSuccessful()) {
                         ComicBook comicBook = new ComicBook();
                         DocumentSnapshot document = task.getResult();
-//                        comicBook = task.getResult().toObject(ComicBook.class);
                         comicBook.setId(document.getId());
                         comicBook.setChapterList((List<String>) document.get("chapterList"));
                         comicBook.setAuthor((String)document.get("author"));
@@ -172,7 +169,9 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Glide.with(getContext()).load(uri).into(imageView);
+                                        if(getContext() != null) {
+                                            Glide.with(getContext()).load(uri).into(imageView);
+                                        }
                                     }
                                 });
                         setData(comicBook);
@@ -204,11 +203,6 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
 
             }
         });
-    }
-    private void addViewToComic() {
-        DocumentReference dr = db.collection("comic_book")
-                .document(bundle.getString("comic_id"));
-        dr.update("view", FieldValue.increment(1));
     }
     private void bindUI(View view) {
         imageView = (ImageView)view.findViewById(R.id.img_c_thumbnail);

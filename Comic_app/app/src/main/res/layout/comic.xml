@@ -12,6 +12,7 @@
         android:id="@+id/imageView_flag"
         android:layout_width="110sp"
         android:layout_height="90sp"
+        android:src="@drawable/ic_baseline_book"
         tools:ignore="VectorDrawableCompat" />
 
     <LinearLayout
