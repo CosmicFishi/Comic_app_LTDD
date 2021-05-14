@@ -3,7 +3,6 @@ package com.example.comic_app.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +96,8 @@ public class Add_Book_Fragment_Activity extends Fragment {
                     btnCreateComic.setText("Cập nhật");
                     edt_comic_content.setText(contentList.get(position-1).getContent());
                     editTextChapterName.setText(comicBook.getChapterList().get(position-1).toString());
+                    btn_deleteChapterComic.setVisibility(View.VISIBLE);
+
                     if (spnChapter.getSelectedItemPosition()+1 == chapterList.size()){
                         btn_deleteChapterComic.setVisibility(View.VISIBLE);
                     }
@@ -178,6 +179,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -192,6 +194,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -200,6 +203,22 @@ public class Add_Book_Fragment_Activity extends Fragment {
                                 Toast.makeText(getContext(), "Error deleting comic", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                db.collection("comic_book").document(comicBook.getSlugg())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Error deleting comic", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                 changeFragment();
             }
         });
@@ -260,7 +279,9 @@ public class Add_Book_Fragment_Activity extends Fragment {
         editTextChapterName.setText(comicBook.getChapterList().get(0).toString());
         edt_comic_content.setText("");
 
-        editTextChapterName.setKeyListener(null);
+
+        edtNameComic.setKeyListener(null);
+
         getChapterList();
         List<Integer> listInt = new ArrayList<>();
         createCategory(comicBook.getCategory());
