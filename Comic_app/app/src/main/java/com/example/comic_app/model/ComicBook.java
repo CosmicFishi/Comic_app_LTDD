@@ -1,9 +1,14 @@
 package com.example.comic_app.model;
 
+import android.annotation.SuppressLint;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComicBook {
+@SuppressLint("ParcelCreator")
+public class ComicBook implements Parcelable {
     private String id;
     private String slugg;
     private String author;
@@ -124,5 +129,23 @@ public class ComicBook {
 
     public void setView(Long view) {
         this.view = view;
+    }
+
+    public String getSlugg() {
+        return slugg;
+    }
+
+    public void setSlugg(String slugg) {
+        this.slugg = slugg;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

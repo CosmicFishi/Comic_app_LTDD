@@ -45,6 +45,9 @@ public class Add_Book_Fragment_Activity extends Fragment {
     FirebaseStorage storage;
     private FirebaseUser currentUser;
 
+    ComicBook comicBook;
+    List<String> chapterList;
+    List<ComicChapter> contentList;
     String[] listItems;
     boolean[] checkedItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
@@ -53,42 +56,26 @@ public class Add_Book_Fragment_Activity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.comic_write_page,container,false);
+        bundle = this.getArguments();
         blindUI(view);
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        spnChapter = (Spinner) view.findViewById(R.id.spn_Chapter);
-        bundle = this.getArguments();
-
-        db.collection("category")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            ListCategory category = new ListCategory();
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Category cate = document.toObject(Category.class);
-                                category.addItem(cate);
-                            }
-                            listItems = category.getListNameCategory().toArray(new String[0]);
-                            checkedItems = new boolean[listItems.length];
-                        } else {
-
-                        }
-                    }
-                });
-        List<String> chapterList = new ArrayList<>();
+        chapterList = new ArrayList<>();
         chapterList.add("Mới");
+
+        if (bundle != null) {
+            comicBook = bundle.getParcelable("comic_book");
+            editComic();
+        } else{
+            initNew();
+        }
+
         ArrayAdapter adapter =new ArrayAdapter<>(getActivity(),
                 R.layout.support_simple_spinner_dropdown_item, chapterList);
         spnChapter.setAdapter(adapter);
 
-        //thêm sách vào database - chua sữ lý Image
-        //Add thành công -> chuyển View qua list truyện đang viết của người dùng -> người dùng Chọn Truyện -> Chương
-        // -> chọn chương mới và nhập nội dung, update.
         btnCreateComic.setOnClickListener(new View.OnClickListener() {
             String author =  currentUser.getDisplayName();
             String nameComic = edtNameComic.getText().toString();
@@ -123,7 +110,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-                mBuilder.setTitle("Chọn tập");
+                mBuilder.setTitle("Chọn thể loại");
                 mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
@@ -134,7 +121,6 @@ public class Add_Book_Fragment_Activity extends Fragment {
                         }
                     }
                 });
-
                 mBuilder.setCancelable(false);
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -148,14 +134,12 @@ public class Add_Book_Fragment_Activity extends Fragment {
                         }
                     }
                 });
-
                 mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                     }
                 });
-
                 mBuilder.setNeutralButton("Clear all", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
@@ -173,6 +157,68 @@ public class Add_Book_Fragment_Activity extends Fragment {
 
         return view;
     }
+    private void editComic(){
+        edtNameComic.setText(comicBook.getTitle());
+        edt_summary.setText(comicBook.getSummary());
+        editTextChapterName.setText(comicBook.getChapterList().get(0).toString());
+        edt_comic_content.setText("");
+
+        getChapterList();
+        List<Integer> listInt = new ArrayList<>();
+        for (int i=0; i<comicBook.getCategory().size(); i++){
+
+//            Integer a = new Integer(comicBook.getCategory().get(1).toString());
+//            listInt.add(a);
+        }
+        createCategory(null);
+    }
+
+    private void initNew(){
+        createCategory(null);
+    }
+    private void getChapterList(){
+        db.collection("comic_chapter")
+                .document(Utils.toSlug(comicBook.getSlugg()))
+                .collection("chapter")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    contentList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        ComicChapter chapter = document.toObject(ComicChapter.class);
+                        contentList.add(chapter);
+                        chapterList.add(document.getId());
+                    }
+                }
+            }
+        });
+    }
+
+    private void createCategory(List<Integer> list){
+        db.collection("category")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    ListCategory category = new ListCategory();
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Category cate = document.toObject(Category.class);
+                        category.addItem(cate);
+                    }
+                    listItems = category.getListNameCategory().toArray(new String[0]);
+                    checkedItems = new boolean[listItems.length];
+                    if (list != null) {
+                        for (int i=0; i<list.size(); i++){
+                            checkedItems[list.get(i).intValue()] = true;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     private void blindUI(View view) {
         edtNameComic = view.findViewById(R.id.edt_namecomic);
         edt_summary = view.findViewById(R.id.edt_summary);
@@ -180,5 +226,6 @@ public class Add_Book_Fragment_Activity extends Fragment {
         btn_category = view.findViewById(R.id.btn_category);
         editTextChapterName = view.findViewById(R.id.editTextChapterName);
         edt_comic_content = view.findViewById(R.id.edt_comic_content);
+        spnChapter = view.findViewById(R.id.spn_Chapter);
     }
 }
