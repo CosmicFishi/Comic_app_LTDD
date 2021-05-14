@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -51,6 +52,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
 
     ComicBook comicBook;
     List<String> chapterList;
+    List<String> valueOfChap;
     List<ComicChapter> contentList;
     String[] listItems;
     boolean[] checkedItems;
@@ -69,6 +71,8 @@ public class Add_Book_Fragment_Activity extends Fragment {
         chapterList = new ArrayList<>();
         chapterList.add("Mới");
         btn_deleteChapterComic.setVisibility(View.GONE);
+        valueOfChap = new ArrayList<>();
+
 
         if (bundle != null) {
             comicBook = bundle.getParcelable("comic_book");
@@ -138,35 +142,45 @@ public class Add_Book_Fragment_Activity extends Fragment {
         btnCreateComic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getListNameChap(valueOfChap,Utils.toSlug(comicBook.getSlugg()));
                 int chapter;
                 String author =  currentUser.getDisplayName();
                 String nameComic = edtNameComic.getText().toString();
                 String chapterName = editTextChapterName.getText().toString();
-
-                if (spnChapter.getSelectedItem().equals("Mới")){
-                    chapter = chapterList.size() - 1;
-                    comicBook.setLength(String.format("%d chương", chapterList.size()));
-                    comicBook.getChapterList().add(editTextChapterName.getText().toString());
-                } else {
-                    chapter = spnChapter.getSelectedItemPosition()-1;
-                    comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition()-1);
-                    comicBook.getChapterList().add(spnChapter.getSelectedItemPosition()-1, chapterName);
+               for(int i = 0; i < valueOfChap.size(); i++){
+                    if (editTextChapterName.getText().toString().toLowerCase().equals(valueOfChap.get(i).toLowerCase())){
+                       Toast.makeText(getContext(), "Can't Add chap because same chapter name", Toast.LENGTH_SHORT).show();
+                       break;
+                   } else if(editTextChapterName.getText().toString().isEmpty()){
+                       Toast.makeText(getContext(), "Can't Add chap because name null", Toast.LENGTH_SHORT).show();
+                       break;
+                   } else {
+                       if (spnChapter.getSelectedItem().equals("Mới")) {
+                           chapter = chapterList.size() - 1;
+                           comicBook.setLength(String.format("%d chương", chapterList.size()));
+                           comicBook.getChapterList().add(editTextChapterName.getText().toString());
+                       } else {
+                           chapter = spnChapter.getSelectedItemPosition() - 1;
+                           comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition() - 1);
+                           comicBook.getChapterList().add(spnChapter.getSelectedItemPosition() - 1, chapterName);
+                       }
+                       ComicBook c = new ComicBook(author, mUserItems, null,
+                               edt_summary.getText().toString(),
+                               nameComic,
+                               "Đang ra", comicBook.getChapterList(),
+                               comicBook.getLength(),
+                               Utils.toSlug(nameComic));
+                       db.collection("comic_book")
+                               .document(Utils.toSlug(c.getTitle()))
+                               .set(c);
+                       db.collection("comic_chapter")
+                               .document(Utils.toSlug(c.getTitle()))
+                               .collection("chapter")
+                               .document(String.valueOf(chapter))
+                               .set(new ComicChapter(edt_comic_content.getText().toString()));
+                       changeFragment();
+                   }
                 }
-                ComicBook c = new ComicBook(author, mUserItems, null,
-                        edt_summary.getText().toString(),
-                        nameComic,
-                        "Đang ra", comicBook.getChapterList(),
-                        comicBook.getLength(),
-                        Utils.toSlug(nameComic));
-                db.collection("comic_book")
-                        .document(Utils.toSlug(c.getTitle()))
-                        .set(c);
-                db.collection("comic_chapter")
-                        .document(Utils.toSlug(c.getTitle()))
-                        .collection("chapter")
-                        .document(String.valueOf(chapter))
-                        .set(new ComicChapter(edt_comic_content.getText().toString()));
-                changeFragment();
             }
         });
         btn_deleteComic.setOnClickListener(new View.OnClickListener() {
@@ -329,6 +343,22 @@ public class Add_Book_Fragment_Activity extends Fragment {
                             mUserItems.add(list.get(i).intValue());
                         }
                     }
+                }
+            }
+        });
+    }
+    //lay ra tên các chương nhưng mà nó chỉ lấy ra vị trí 0
+    private void getListNameChap(List<String> list, String name){
+        db.collection("comic_book")
+                .document(name)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                ComicBook book = new ComicBook();
+                DocumentSnapshot document = task.getResult();
+                book.setChapterList((List<String>) document.get("chapterList"));
+                for(int i = 0; i < book.getChapterList().size() ; i++){
+                    list.add(book.getChapterList().get(i).toString());
                 }
             }
         });
