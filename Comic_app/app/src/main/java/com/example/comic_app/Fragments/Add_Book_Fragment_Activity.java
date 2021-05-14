@@ -3,6 +3,7 @@ package com.example.comic_app.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
 
         chapterList = new ArrayList<>();
         chapterList.add("Mới");
+        btn_deleteChapterComic.setVisibility(View.GONE);
 
         if (bundle != null) {
             comicBook = bundle.getParcelable("comic_book");
@@ -95,7 +97,9 @@ public class Add_Book_Fragment_Activity extends Fragment {
                     btnCreateComic.setText("Cập nhật");
                     edt_comic_content.setText(contentList.get(position-1).getContent());
                     editTextChapterName.setText(comicBook.getChapterList().get(position-1).toString());
-                    btn_deleteChapterComic.setVisibility(View.VISIBLE);
+                    if (spnChapter.getSelectedItemPosition()+1 == chapterList.size()){
+                        btn_deleteChapterComic.setVisibility(View.VISIBLE);
+                    }
                 }
             }
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -256,7 +260,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
         editTextChapterName.setText(comicBook.getChapterList().get(0).toString());
         edt_comic_content.setText("");
 
-//        editTextChapterName.setInputType(NONE); set cant edit
+        editTextChapterName.setKeyListener(null);
         getChapterList();
         List<Integer> listInt = new ArrayList<>();
         createCategory(comicBook.getCategory());
