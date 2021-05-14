@@ -13,7 +13,18 @@ public class ListCategory {
         this.listCate = list;
     }
     public ListCategory(){}
+    public List<String> getListNameCategory(){
+        List<String> list = new ArrayList<>();
 
+        for (Category c : listCate){
+            list.add(c.getCategoryName().substring(0, 1).toUpperCase() + c.getCategoryName().substring(1));
+        }
+
+        return list;
+    }
+    public void addItem(Category c){
+        this.listCate.add(c);
+    }
 //    public Category getCategoryById(int id){
 //        listCate.forEach(category -> {
 //            if (category.getId() == id)
