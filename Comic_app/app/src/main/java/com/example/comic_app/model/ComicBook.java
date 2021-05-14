@@ -12,7 +12,7 @@ public class ComicBook implements Parcelable {
     private String id;
     private String slugg;
     private String author;
-    private List<Integer> category = new ArrayList<>();
+    private List<Long> category = new ArrayList<>();
     private String image;
     private String status;
     private String summary;
@@ -107,11 +107,11 @@ public class ComicBook implements Parcelable {
         this.length = length;
     }
 
-    public List<Integer> getCategory() {
+    public List<Long> getCategory() {
         return category;
     }
 
-    public void setCategory(List<Integer> category) {
+    public void setCategory(List<Long> category) {
         this.category = category;
     }
 
