@@ -160,14 +160,38 @@
                 android:text="Ngày hôm ấy tui đi ra khỏi nhà và gặp đc...."
                 android:textSize="17dp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_createComic"
+                android:layout_width="184dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/second_button_shape"
+                android:text="Tạo"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btn_deleteChapterComic"
+                android:layout_width="184dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/second_button_shape"
+                android:text="Xóa tập"
+                android:textColor="@color/white" />
+        </LinearLayout>
         <Button
-            android:id="@+id/btn_createComic"
+            android:id="@+id/btn_deleteComic"
             android:layout_width="184dp"
             android:layout_height="75dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:background="@drawable/second_button_shape"
-            android:text="Tạo"
+            android:text="Xóa Truyện"
             android:textColor="@color/white" />
 
     </LinearLayout>
