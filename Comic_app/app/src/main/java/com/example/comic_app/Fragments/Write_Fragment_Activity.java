@@ -1,6 +1,8 @@
 package com.example.comic_app.Fragments;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +58,6 @@ public class Write_Fragment_Activity extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
 
-
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         ComicBook comicBook = new ComicBook();
                         comicBook.setId(document.getId());
@@ -66,9 +67,10 @@ public class Write_Fragment_Activity extends Fragment {
                         comicBook.setImage((String)document.get("image"));
                         comicBook.setLength((String)document.get("length"));
                         comicBook.setStatus((String)document.get("status"));
-                        comicBook.setSummary((String)document.get("summany"));
+                        comicBook.setSummary((String)document.get("summary"));
                         comicBook.setTitle((String)document.get("title"));
-
+                        comicBook.setSlugg((String)document.get("slugg"));
+                        comicBook.setView((Long)document.get("view"));
                         listComicBooks.add(comicBook);
                     }
                     listAdapter = new AdapterComicBook(getActivity(), R.layout.result_card, listComicBooks);
@@ -77,12 +79,7 @@ public class Write_Fragment_Activity extends Fragment {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                            Bundle b = new Bundle();
-//                            Fragment listchap =  new List_Chap_Of_User();
-//                            b.putString("comic_id", listComicBooks.get(position).getTitle());
-//                            listchap.setArguments(b);
-//                            getActivity().getSupportFragmentManager().beginTransaction()
-//                                    .replace(R.id.frag_container,listchap).addToBackStack(null).commit();
+                            changeFragment(listComicBooks.get(position));
                         }
                     });
 
@@ -92,17 +89,25 @@ public class Write_Fragment_Activity extends Fragment {
             }
         });
 
-
-
         btn_bangDieuKhien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment bdk = new Add_Book_Fragment_Activity();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, bdk).addToBackStack(null).commit();
+                changeFragment(null);
             }
         });
 
-
         return  list_comic_of_user;
+    }
+    public void changeFragment(ComicBook comic){
+        Fragment listchap =  new Add_Book_Fragment_Activity();
+
+        if (comic != null){
+            Bundle b = new Bundle();
+            b.putParcelable("comic_book", comic);
+            listchap.setArguments(b);
+        }
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frag_container,listchap).addToBackStack(null).commit();
     }
 }
