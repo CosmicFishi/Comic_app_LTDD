@@ -63,7 +63,7 @@ public class Write_Fragment_Activity extends Fragment {
                         comicBook.setId(document.getId());
                         comicBook.setChapterList((List<String>)document.get("chapterList"));
                         comicBook.setAuthor((String)document.get("author"));
-                        comicBook.setCategory((List<Integer>)document.get("category"));
+                        comicBook.setCategory((List<Long>)document.get("category"));
                         comicBook.setImage((String)document.get("image"));
                         comicBook.setLength((String)document.get("length"));
                         comicBook.setStatus((String)document.get("status"));

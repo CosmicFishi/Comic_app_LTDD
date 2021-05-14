@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -76,28 +77,48 @@ public class Add_Book_Fragment_Activity extends Fragment {
                 R.layout.support_simple_spinner_dropdown_item, chapterList);
         spnChapter.setAdapter(adapter);
 
+        spnChapter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if(selectedItem.equals("Mới")) {
+                    edt_comic_content.setText("");
+                    editTextChapterName.setText("");
+                    } else {
+                        edt_comic_content.setText(contentList.get(position-1).getContent());
+                        editTextChapterName.setText(comicBook.getChapterList().get(position-1).toString());
+                    }
+                }
+               public void onNothingSelected(AdapterView<?> parent) {}
+           });
+
         btnCreateComic.setOnClickListener(new View.OnClickListener() {
             String author =  currentUser.getDisplayName();
             String nameComic = edtNameComic.getText().toString();
             String chapterName = editTextChapterName.getText().toString();
             @Override
             public void onClick(View v) {
-                ComicBook comicBook = new ComicBook(author, mUserItems, null,
+                if (spnChapter.getSelectedItem().equals("Mới")){
+                    comicBook.getChapterList().add(editTextChapterName.getText().toString());
+                } else {
+                    comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition()-1);
+                    comicBook.getChapterList().add(spnChapter.getSelectedItemPosition()-1, chapterName);
+                }
+                ComicBook c = new ComicBook(author, mUserItems, null,
                         edt_summary.getText().toString(),
                         nameComic,
-                        "Đang ra", Arrays.asList(chapterName),
+                        "Đang ra", comicBook.getChapterList(),
                         String.format("%d chương", chapterList.size()),
                         Utils.toSlug(nameComic));
                 db.collection("comic_book")
-                        .document(Utils.toSlug(comicBook.getTitle()))
-                        .set(comicBook);
+                        .document(Utils.toSlug(c.getTitle()))
+                        .set(c);
                 int chapter;
                 if (spnChapter.getSelectedItem().toString().equals("Mới"))
                     chapter = chapterList.size() - 1;
                 else
-                    chapter = spnChapter.getSelectedItemPosition();
+                    chapter = spnChapter.getSelectedItemPosition() - 1;
                 db.collection("comic_chapter")
-                        .document(Utils.toSlug(comicBook.getTitle()))
+                        .document(Utils.toSlug(c.getTitle()))
                         .collection("chapter")
                         .document(String.valueOf(chapter))
                         .set(new ComicChapter(edt_comic_content.getText().toString()));
@@ -165,12 +186,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
 
         getChapterList();
         List<Integer> listInt = new ArrayList<>();
-        for (int i=0; i<comicBook.getCategory().size(); i++){
-
-//            Integer a = new Integer(comicBook.getCategory().get(1).toString());
-//            listInt.add(a);
-        }
-        createCategory(null);
+        createCategory(comicBook.getCategory());
     }
 
     private void initNew(){
@@ -195,7 +211,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
         });
     }
 
-    private void createCategory(List<Integer> list){
+    private void createCategory(List<Long> list){
         db.collection("category")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
