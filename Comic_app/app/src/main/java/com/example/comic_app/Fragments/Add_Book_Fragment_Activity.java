@@ -70,6 +70,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
             comicBook = bundle.getParcelable("comic_book");
             editComic();
         } else{
+            comicBook = new ComicBook();
             initNew();
         }
 
@@ -94,14 +95,19 @@ public class Add_Book_Fragment_Activity extends Fragment {
         });
 
         btnCreateComic.setOnClickListener(new View.OnClickListener() {
-            String author =  currentUser.getDisplayName();
-            String nameComic = edtNameComic.getText().toString();
-            String chapterName = editTextChapterName.getText().toString();
             @Override
             public void onClick(View v) {
+                int chapter;
+                String author =  currentUser.getDisplayName();
+                String nameComic = edtNameComic.getText().toString();
+                String chapterName = editTextChapterName.getText().toString();
+
                 if (spnChapter.getSelectedItem().equals("Mới")){
+                    chapter = chapterList.size() - 1;
+                    comicBook.setLength(String.format("%d chương", chapterList.size()));
                     comicBook.getChapterList().add(editTextChapterName.getText().toString());
                 } else {
+                    chapter = spnChapter.getSelectedItemPosition()-1;
                     comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition()-1);
                     comicBook.getChapterList().add(spnChapter.getSelectedItemPosition()-1, chapterName);
                 }
@@ -109,16 +115,11 @@ public class Add_Book_Fragment_Activity extends Fragment {
                         edt_summary.getText().toString(),
                         nameComic,
                         "Đang ra", comicBook.getChapterList(),
-                        String.format("%d chương", chapterList.size()),
+                        comicBook.getLength(),
                         Utils.toSlug(nameComic));
                 db.collection("comic_book")
                         .document(Utils.toSlug(c.getTitle()))
                         .set(c);
-                int chapter;
-                if (spnChapter.getSelectedItem().toString().equals("Mới"))
-                    chapter = chapterList.size() - 1;
-                else
-                    chapter = spnChapter.getSelectedItemPosition()-1;
                 db.collection("comic_chapter")
                         .document(Utils.toSlug(c.getTitle()))
                         .collection("chapter")
@@ -231,6 +232,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
                     if (list != null) {
                         for (int i=0; i<list.size(); i++){
                             checkedItems[list.get(i).intValue()] = true;
+                            mUserItems.add(list.get(i).intValue());
                         }
                     }
                 }
