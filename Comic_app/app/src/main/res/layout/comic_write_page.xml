@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bảng Điều Khiển"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_nameComic"
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Tên truyện"
+                android:textSize="17dp" />
+
+            <EditText
+                android:id="@+id/edt_namecomic"
+                android:hint="Nhập tên câu truyện"
+                android:layout_width="match_parent"
+                android:text="a Ngôi nhà hạnh phúc"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_categoryComic"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Thể loại"
+                android:textSize="17dp" />
+
+            <Button
+                android:id="@+id/btn_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn thể loại"
+                android:layout_weight="2"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp">
+            </Button>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Giới thiệu"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/edt_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="191dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbars="vertical"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:hint="Mô tả câu chuyện"
+                android:text="Kể về một gia đình hạnh phúc."
+                android:textSize="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Tập "
+                    android:textSize="18dp" />
+                <EditText
+                    android:id="@+id/editTextChapterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:hint="Nhập tên chương"
+                    android:layout_weight="10"
+                    android:textSize="18dp"
+                    android:text="Mở đầu gặp mặt"/>
+
+                <Spinner
+                    android:id="@+id/spn_Chapter"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp" >
+                </Spinner>
+            </LinearLayout>
+            <EditText
+                android:id="@+id/edt_comic_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="191dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Nội dung tập truyện"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:singleLine="false"
+                android:text="Ngày hôm ấy tui đi ra khỏi nhà và gặp đc...."
+                android:textSize="17dp" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_createComic"
+            android:layout_width="184dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/second_button_shape"
+            android:text="Tạo"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</ScrollView>
