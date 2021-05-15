@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Search_category_Fragment_Activity extends ManageListViewComic {
         CollectionReference comic_book = fireStore.collection("comic_book");
 
         query = comic_book.whereArrayContains("category", bundle.getInt("cate_id"));
-        setResultData(true);
+        setResultData();
         return category_list_view;
     }
 

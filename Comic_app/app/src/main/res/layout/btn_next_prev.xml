@@ -3,25 +3,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/btn_prev"
-        android:layout_width="0dp"
-        app:backgroundTint="@null"
-        android:background="@drawable/main_button_shape"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:text="@string/preC"/>
+        android:background="@drawable/main_button_shape"
+        android:text="@string/preC"
+        android:textSize="12sp"
+        app:backgroundTint="@null" />
+
     <Button
         android:id="@+id/btn_next"
-        android:layout_width="0dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        app:backgroundTint="@null"
-        android:background="@drawable/main_button_shape"
         android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:text="@string/nextC"/>
+        android:background="@drawable/main_button_shape"
+        android:text="@string/nextC"
+        android:textSize="12sp"
+        app:backgroundTint="@null" />
 
 </LinearLayout>

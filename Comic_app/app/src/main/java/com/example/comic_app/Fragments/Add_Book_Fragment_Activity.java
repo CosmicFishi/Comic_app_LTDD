@@ -156,7 +156,6 @@ public class Add_Book_Fragment_Activity extends Fragment {
                     chapter = chapterList.size() - 1;
                     comicBook.setLength(String.format("%d chương", chapterList.size()));
                     comicBook.getChapterList().add(editTextChapterName.getText().toString());
-
                 } else {
                     chapter = spnChapter.getSelectedItemPosition() - 1;
                     comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition() - 1);
@@ -177,7 +176,6 @@ public class Add_Book_Fragment_Activity extends Fragment {
                         .document(String.valueOf(chapter))
                         .set(new ComicChapter(edt_comic_content.getText().toString()));
                 changeFragment();
-
             }
         });
         btn_deleteComic.setOnClickListener(new View.OnClickListener() {

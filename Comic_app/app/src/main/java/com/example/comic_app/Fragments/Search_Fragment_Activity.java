@@ -71,11 +71,11 @@ public class Search_Fragment_Activity extends ManageListViewComic {
         kw = kw.toUpperCase();
         if(kw.length() != 0) {
             query = fireStore.collection("comic_book")
-                    .orderBy("title").startAt(kw).limit(10);
+                    .orderBy("title", Query.Direction.DESCENDING).startAt(kw).limit(10);
             setResultData();
         } else {
             query = fireStore.collection("comic_book")
-                    .orderBy("title", Query.Direction.DESCENDING).limit(10);
+                    .orderBy("view", Query.Direction.DESCENDING).limit(10);
             setResultData();
         }
     }

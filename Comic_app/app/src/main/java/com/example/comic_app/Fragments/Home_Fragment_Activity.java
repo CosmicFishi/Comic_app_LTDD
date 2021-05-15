@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -51,7 +52,7 @@ public class Home_Fragment_Activity extends ManageListViewComic {
             userName.setText("Hi " + mAuth.getCurrentUser().getDisplayName());
 
         firestore = FirebaseFirestore.getInstance();
-        query = firestore.collection("comic_book").orderBy("view").limit(10);
+        query = firestore.collection("comic_book").orderBy("view", Query.Direction.DESCENDING).limit(10);
         setCategoryAdapterRV();
         setResultData();
         return homeView;
