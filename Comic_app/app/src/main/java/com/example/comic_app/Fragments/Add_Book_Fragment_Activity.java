@@ -3,7 +3,6 @@ package com.example.comic_app.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -97,6 +97,8 @@ public class Add_Book_Fragment_Activity extends Fragment {
                     btnCreateComic.setText("Cập nhật");
                     edt_comic_content.setText(contentList.get(position-1).getContent());
                     editTextChapterName.setText(comicBook.getChapterList().get(position-1).toString());
+                    btn_deleteChapterComic.setVisibility(View.VISIBLE);
+
                     if (spnChapter.getSelectedItemPosition()+1 == chapterList.size()){
                         btn_deleteChapterComic.setVisibility(View.VISIBLE);
                     }
@@ -137,7 +139,6 @@ public class Add_Book_Fragment_Activity extends Fragment {
         btnCreateComic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int chapter;
                 String author =  currentUser.getDisplayName();
                 String nameComic = edtNameComic.getText().toString();
                 String chapterName = editTextChapterName.getText().toString();
@@ -150,15 +151,15 @@ public class Add_Book_Fragment_Activity extends Fragment {
                     Toast.makeText(getContext(), "Không thể thêm vì tên tập truyện bị trùng", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                int chapter;
                 if (spnChapter.getSelectedItem().equals("Mới")) {
                     chapter = chapterList.size() - 1;
                     comicBook.setLength(String.format("%d chương", chapterList.size()));
                     comicBook.getChapterList().add(editTextChapterName.getText().toString());
-
                 } else {
-                    chapter = spnChapter.getSelectedItemPosition()-1;
-                    comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition()-1);
-                    comicBook.getChapterList().add(spnChapter.getSelectedItemPosition()-1, chapterName);
+                    chapter = spnChapter.getSelectedItemPosition() - 1;
+                    comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition() - 1);
+                    comicBook.getChapterList().add(spnChapter.getSelectedItemPosition() - 1, chapterName);
                 }
                 ComicBook c = new ComicBook(author, mUserItems, null,
                         edt_summary.getText().toString(),
@@ -187,6 +188,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -201,6 +203,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -209,6 +212,22 @@ public class Add_Book_Fragment_Activity extends Fragment {
                                 Toast.makeText(getContext(), "Error deleting comic", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                db.collection("comic_book").document(comicBook.getSlugg())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(), "Comic successfully deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Error deleting comic", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                 changeFragment();
             }
         });
@@ -269,7 +288,9 @@ public class Add_Book_Fragment_Activity extends Fragment {
         editTextChapterName.setText(comicBook.getChapterList().get(0).toString());
         edt_comic_content.setText("");
 
-        editTextChapterName.setKeyListener(null);
+
+        edtNameComic.setKeyListener(null);
+
         getChapterList();
         List<Integer> listInt = new ArrayList<>();
         createCategory(comicBook.getCategory());
