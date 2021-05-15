@@ -188,7 +188,7 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                                             if(getActivity() == null) {
                                                 return;
                                             } else {
-                                                btn_add_fav.setText("Unfav");
+                                                btn_add_fav.setText("Bỏ thích");
                                                 fav_flag = true;
                                                 break;
                                             }

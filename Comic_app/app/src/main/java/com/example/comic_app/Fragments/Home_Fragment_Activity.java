@@ -48,7 +48,7 @@ public class Home_Fragment_Activity extends ManageListViewComic {
         bindUI(homeView);
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser().getDisplayName().length() > 0)
-            userName.setText("Hi " + mAuth.getCurrentUser().getDisplayName());
+            userName.setText("Chào " + mAuth.getCurrentUser().getDisplayName()+"!");
 
         firestore = FirebaseFirestore.getInstance();
         query = firestore.collection("comic_book").orderBy("view").limit(10);

@@ -259,13 +259,13 @@ public class Add_Book_Fragment_Activity extends Fragment {
                         }
                     }
                 });
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                mBuilder.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                     }
                 });
-                mBuilder.setNeutralButton("Clear all", new DialogInterface.OnClickListener() {
+                mBuilder.setNeutralButton("Xóa tất cả", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         for (int i = 0; i < checkedItems.length; i++) {
