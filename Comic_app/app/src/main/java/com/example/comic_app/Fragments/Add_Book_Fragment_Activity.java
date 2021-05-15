@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -138,19 +139,28 @@ public class Add_Book_Fragment_Activity extends Fragment {
         btnCreateComic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int chapter;
                 String author =  currentUser.getDisplayName();
                 String nameComic = edtNameComic.getText().toString();
                 String chapterName = editTextChapterName.getText().toString();
 
-                if (spnChapter.getSelectedItem().equals("Mới")){
+                if(editTextChapterName.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Tên truyện không được để trống", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int chapter;
+                if (spnChapter.getSelectedItem().equals("Mới")) {
                     chapter = chapterList.size() - 1;
                     comicBook.setLength(String.format("%d chương", chapterList.size()));
                     comicBook.getChapterList().add(editTextChapterName.getText().toString());
+                    if(comicBook.getChapterList().contains(chapterName)) {
+                        Toast.makeText(getContext(), "Không thể thêm vì tên tập truyện bị trùng", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 } else {
-                    chapter = spnChapter.getSelectedItemPosition()-1;
-                    comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition()-1);
-                    comicBook.getChapterList().add(spnChapter.getSelectedItemPosition()-1, chapterName);
+                    chapter = spnChapter.getSelectedItemPosition() - 1;
+                    comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition() - 1);
+                    comicBook.getChapterList().add(spnChapter.getSelectedItemPosition() - 1, chapterName);
                 }
                 ComicBook c = new ComicBook(author, mUserItems, null,
                         edt_summary.getText().toString(),
@@ -167,6 +177,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
                         .document(String.valueOf(chapter))
                         .set(new ComicChapter(edt_comic_content.getText().toString()));
                 changeFragment();
+
             }
         });
         btn_deleteComic.setOnClickListener(new View.OnClickListener() {
