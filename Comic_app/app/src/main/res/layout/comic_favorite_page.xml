@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="top|center"
         android:textSize="30sp"
-        android:text="Favorite view"/>
+        android:text="Danh sách yêu thích"/>
 
     <ListView
         android:id="@+id/listViewFavorite"

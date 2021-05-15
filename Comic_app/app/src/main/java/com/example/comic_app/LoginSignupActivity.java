@@ -217,7 +217,7 @@ public class LoginSignupActivity extends Activity {
     private boolean checkValidEmailAndPassword(String email, String password) {
         if(Utils.checkValidRegex(email, emailRegex) && Utils.checkValidRegex(password, passRegex))
             return true;
-        Toast.makeText(getApplicationContext(), "Sai tài khoản hay mật khẩu. Mật khẩu phải mạnh và tối thiểu 8 ký tự", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Sai mail hay mật khẩu. Mật khẩu phải mạnh và tối thiểu 8 ký tự", Toast.LENGTH_SHORT).show();
         return false;
     }
     public void checkAndUserdetail(String Uid){
