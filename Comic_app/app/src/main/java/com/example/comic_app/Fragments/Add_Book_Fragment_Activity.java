@@ -298,6 +298,7 @@ public class Add_Book_Fragment_Activity extends Fragment {
 
     private void initNew(){
         createCategory(null);
+        btn_deleteComic.setVisibility(View.GONE);
     }
     private void getChapterList(){
         db.collection("comic_chapter")
