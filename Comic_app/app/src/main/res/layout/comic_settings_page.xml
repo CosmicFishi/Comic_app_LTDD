@@ -16,20 +16,21 @@
             android:id="@+id/btn_move_change_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:paddingVertical="10dp"
             android:layout_marginVertical="10dp"
-            android:backgroundTint="@color/mainTheme"
+            android:background="@drawable/border_radius_login"
             android:text="Thay đổi thông tin" />
 
         <Button
             android:id="@+id/btn_return_profile_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
             android:paddingVertical="10dp"
-            android:backgroundTint="@color/mainTheme"
-            android:text="return" />
+            android:background="@drawable/border_radius_login"
+            android:text="Quay lại" />
 
     </LinearLayout>
 

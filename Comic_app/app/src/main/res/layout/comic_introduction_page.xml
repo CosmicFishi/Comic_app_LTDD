@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:text="Favorite"
+                    android:text="Yêu thích"
                     android:textColor="@color/white"/>
                 <Button
                     android:layout_weight="1"
@@ -192,7 +192,7 @@
                     android:layout_height="wrap_content"
                     app:drawableTint="@color/white"
                     android:drawableLeft="@drawable/ic_baseline_arrow_read"
-                    android:text="Read"
+                    android:text="Đọc"
                     android:textColor="@color/white"/>
             </LinearLayout>
 
@@ -203,7 +203,7 @@
                 android:background="@drawable/main_button_shape"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="Read first chapter !"
+                android:text="Đọc chương 1 !"
                 android:textColor="@color/white"/>
 
         </LinearLayout>

@@ -13,7 +13,7 @@
         android:maxLines="1"
         android:inputType="text"
         android:imeOptions="actionSearch"
-        android:hint="Nhập tên truyện để tìm!"
+        android:hint="Nhập truyện cần tìm ở đây!!!"
         android:layout_margin="10dp"
         android:textSize="20sp" />
 
