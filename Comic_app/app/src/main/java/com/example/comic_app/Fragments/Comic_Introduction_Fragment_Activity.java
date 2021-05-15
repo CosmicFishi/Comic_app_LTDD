@@ -72,15 +72,15 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    btn_add_fav.setText("Favorite");
+                                    btn_add_fav.setText("yêu thích");
                                     fav_flag = false;
-                                    Toast.makeText(getContext(), "Successfully unfavorite", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Bỏ thích thành công", Toast.LENGTH_SHORT).show();
                                     Log.i("Updated fav list", "onSuccess: Updated favorite list");
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Failed to unfavorite", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Bỏ thích thất bại", Toast.LENGTH_SHORT).show();
                             Log.w("Updated fav list", "onFailure: Couldn't updated favorite list");
                         }
                     });
@@ -90,15 +90,15 @@ public class Comic_Introduction_Fragment_Activity extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    btn_add_fav.setText("Unfav");
+                                    btn_add_fav.setText("Bỏ thích");
                                     fav_flag = true;
-                                    Toast.makeText(getContext(), "Successfully favorite", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Yêu thích thành công", Toast.LENGTH_SHORT).show();
                                     Log.i("Updated fav list", "onSuccess: Updated favorite list");
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Failed to favorite", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Yêu thích thất bại", Toast.LENGTH_SHORT).show();
                             Log.w("Updated fav list", "onFailure: Couldn't updated favorite list");
                         }
                     });
