@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Comic_app</string>
+    <string name="author">Tác giả</string>
+    <string name="ark_num">Số chương</string>
+    <string name="status">Trạng thái</string>
+    <string name="view">Lượt xem</string>
+    <string name="nextC">Chương sau</string>
+    <string name="preC">Chương trước</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="uName">Tên: </string>
+    <string name="uNumFav">Số truyện yêu thích: </string>
+    <string name="uEmail">Email: </string>
+    <string name="uPhone">Sdt: </string>
+    <string name="uPassword">Mật khẩu: </string>
+    <string name="uPasswordNew">Mật khẩu mới: </string>
+    <string name="uConfirmPassword">Nhập lại mật khẩu mới: </string>
+    <string name="reset">Đặt lại</string>
+    <string name="update">Cập nhật</string>
+
 </resources>

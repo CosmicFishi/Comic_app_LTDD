@@ -6,25 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/header"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:orientation="horizontal"
+        android:layout_gravity="end">
+
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello World!"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                 />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AHIHI"/>
+        android:text="AHIHI"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btnAPI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button API"
-        android:textSize="25dp"/>
+        android:text="Test API"
+        android:textColor="@color/black"/>
+    <Button
+        android:id="@+id/btnSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN OUT"
+        android:textColor="@color/black"/>
 
 </LinearLayout>
