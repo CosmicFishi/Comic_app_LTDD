@@ -9,110 +9,86 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="20dp"
+        android:padding="10dp"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="Thay đổi thông tin"
             android:textStyle="bold"
+
             android:textAlignment="center"
             android:layout_marginBottom="10dp"
             android:textSize="30sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField"
+            android:layout_marginTop="20dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content">
+            android:hint="Số điện thoại">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="@string/uPhone"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:textSize="20dp"
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_u_phone_2"
-                android:inputType="number"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
+                android:layout_width="340dp"
+                android:layout_height="60dp"
+                android:textSize="17dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content">
+            android:hint="Mật khẩu cũ">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="@string/uPassword"/>
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_u_pass"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:inputType="textPassword"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
+                android:layout_width="340dp"
+                android:layout_height="60dp"
+                android:textSize="17dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content">
+            android:hint="Mật khẩu mới">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="@string/uPasswordNew"/>
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_u_pass_new"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:inputType="textPassword"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
+                android:layout_width="340dp"
+                android:layout_height="60dp"
+                android:textSize="17dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content">
+            android:hint="Nhập lại mật khẩu mới">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:text="@string/uConfirmPassword"/>
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_u_confirm_pass"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:inputType="textPassword"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
+                android:layout_width="340dp"
+                android:layout_height="60dp"
+                android:textSize="17dp" />
+        </com.google.android.material.textfield.TextInputLayout>
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:id="@+id/btn_reset_phone"
             android:paddingVertical="10dp"
             android:backgroundTint="@color/mainThemeSecond"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginBottom="5dp"
             android:text="@string/reset"/>
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:id="@+id/btn_update"
             android:paddingVertical="10dp"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:text="@string/update"/>
     </LinearLayout>
 
