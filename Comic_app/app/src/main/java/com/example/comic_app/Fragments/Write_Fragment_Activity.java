@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -56,36 +57,44 @@ public class Write_Fragment_Activity extends Fragment {
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        ComicBook comicBook = new ComicBook();
-                        comicBook.setId(document.getId());
-                        comicBook.setChapterList((List<String>)document.get("chapterList"));
-                        comicBook.setAuthor((String)document.get("author"));
-                        comicBook.setCategory((List<Long>)document.get("category"));
-                        comicBook.setImage((String)document.get("image"));
-                        comicBook.setLength((String)document.get("length"));
-                        comicBook.setStatus((String)document.get("status"));
-                        comicBook.setSummary((String)document.get("summary"));
-                        comicBook.setTitle((String)document.get("title"));
-                        comicBook.setSlugg((String)document.get("slugg"));
-                        comicBook.setView((Long)document.get("view"));
-                        listComicBooks.add(comicBook);
-                    }
-                    listAdapter = new AdapterComicBook(getActivity(), R.layout.result_card, listComicBooks);
-
-                    listView.setAdapter(listAdapter);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            changeFragment(listComicBooks.get(position));
-                        }
-                    });
-
+                if(getActivity() == null) {
+                    return;
                 } else {
+                    QuerySnapshot documentSnapshot = task.getResult();
+                    if (task.isSuccessful()) {
+                        if(documentSnapshot.getDocuments().size() == 0) {
+                            return;
+                        }
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            ComicBook comicBook = new ComicBook();
+                            comicBook.setId(document.getId());
+                            comicBook.setChapterList((List<String>)document.get("chapterList"));
+                            comicBook.setAuthor((String)document.get("author"));
+                            comicBook.setCategory((List<Long>)document.get("category"));
+                            comicBook.setImage((String)document.get("image"));
+                            comicBook.setLength((String)document.get("length"));
+                            comicBook.setStatus((String)document.get("status"));
+                            comicBook.setSummary((String)document.get("summary"));
+                            comicBook.setTitle((String)document.get("title"));
+                            comicBook.setSlugg((String)document.get("slugg"));
+                            comicBook.setView((Long)document.get("view"));
+                            listComicBooks.add(comicBook);
+                        }
+                        listAdapter = new AdapterComicBook(getActivity(), R.layout.result_card, listComicBooks);
 
+                        listView.setAdapter(listAdapter);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                changeFragment(listComicBooks.get(position));
+                            }
+                        });
+
+                    } else {
+
+                    }
                 }
+
             }
         });
 
