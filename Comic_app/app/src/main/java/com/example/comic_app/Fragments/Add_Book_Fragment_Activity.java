@@ -147,16 +147,16 @@ public class Add_Book_Fragment_Activity extends Fragment {
                     Toast.makeText(getContext(), "Tên truyện không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                if(comicBook.getChapterList().contains(chapterName)) {
+                    Toast.makeText(getContext(), "Không thể thêm vì tên tập truyện bị trùng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int chapter;
                 if (spnChapter.getSelectedItem().equals("Mới")) {
                     chapter = chapterList.size() - 1;
                     comicBook.setLength(String.format("%d chương", chapterList.size()));
                     comicBook.getChapterList().add(editTextChapterName.getText().toString());
-                    if(comicBook.getChapterList().contains(chapterName)) {
-                        Toast.makeText(getContext(), "Không thể thêm vì tên tập truyện bị trùng", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+
                 } else {
                     chapter = spnChapter.getSelectedItemPosition() - 1;
                     comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition() - 1);
