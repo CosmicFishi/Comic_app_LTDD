@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -190,11 +191,7 @@ public class LoginSignupActivity extends Activity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                if (auth.getCurrentUser().getPhoneNumber() != "")
-                                    adduserDetail(auth.getCurrentUser().getPhoneNumber());
-                                else
-                                    adduserDetail("Not set");
-
+                                checkAndUserdetail(auth.getCurrentUser().getUid());
                                 changeMainActivity();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Can't get the access Token.", Toast.LENGTH_SHORT).show();
@@ -223,7 +220,24 @@ public class LoginSignupActivity extends Activity {
         Toast.makeText(getApplicationContext(), "Sai tài khoản hay mật khẩu. Mật khẩu phải mạnh và tối thiểu 8 ký tự", Toast.LENGTH_SHORT).show();
         return false;
     }
+    public void checkAndUserdetail(String Uid){
+        fireStore.collection("user").document(Uid)
+            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
 
+                        } else {
+                            adduserDetail("Not set");
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Không tạo được thông tin người dùng", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
     public void adduserDetail(String phone){
         Map<String, Object> user = new HashMap<>();
         user.put("comicHistory", new ArrayList<String>());

@@ -142,10 +142,19 @@ public class Add_Book_Fragment_Activity extends Fragment {
                 String nameComic = edtNameComic.getText().toString();
                 String chapterName = editTextChapterName.getText().toString();
 
-                if (spnChapter.getSelectedItem().equals("Mới")){
+                if(editTextChapterName.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Tên truyện không được để trống", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(comicBook.getChapterList().contains(chapterName)) {
+                    Toast.makeText(getContext(), "Không thể thêm vì tên tập truyện bị trùng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (spnChapter.getSelectedItem().equals("Mới")) {
                     chapter = chapterList.size() - 1;
                     comicBook.setLength(String.format("%d chương", chapterList.size()));
                     comicBook.getChapterList().add(editTextChapterName.getText().toString());
+
                 } else {
                     chapter = spnChapter.getSelectedItemPosition()-1;
                     comicBook.getChapterList().remove(spnChapter.getSelectedItemPosition()-1);
