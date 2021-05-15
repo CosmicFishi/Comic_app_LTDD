@@ -101,8 +101,19 @@ public class LoginSignupActivity extends Activity {
                                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                             .setDisplayName(editTextDisplayName.getText().toString())
                                             .build();
-                                    auth.getCurrentUser().updateProfile(profileUpdates);
-                                    changeMainActivity();
+                                    auth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getApplicationContext(), "Tạo tài khoản thành công=", Toast.LENGTH_SHORT).show();
+                                                changeMainActivity();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "Không thể tạo tài khoản, hãy thử lại sau.", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    });
+
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Không thể tạo tài khoản, hãy thử lại sau.", Toast.LENGTH_SHORT).show();
                                 }
